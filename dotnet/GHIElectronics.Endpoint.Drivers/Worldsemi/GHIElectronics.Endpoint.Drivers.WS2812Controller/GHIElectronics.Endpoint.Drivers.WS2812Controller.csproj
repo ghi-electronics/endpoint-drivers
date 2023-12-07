@@ -29,8 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
-	<PackageReference Include="GHIElectronics.Endpoint.Core" Version="0.0.2" />	
-    <PackageReference Include="GHIElectronics.Endpoint.Devices.DigitalSignal" Version="0.0.2" />
+	<PackageReference Include="GHIElectronics.Endpoint.Core" Version="0.0.2.4" />	
+    <PackageReference Include="GHIElectronics.Endpoint.Devices.DigitalSignal" Version="0.0.2.4" />
   </ItemGroup>
 
 </Project>
