@@ -1,4 +1,4 @@
-﻿using GHIElectronics.Endpoint.Devices.DigitalSignal;
+using GHIElectronics.Endpoint.Devices.DigitalSignal;
 
 namespace GHIElectronics.Endpoint.Drivers.WS2812Controller
 {
@@ -46,11 +46,11 @@ namespace GHIElectronics.Endpoint.Drivers.WS2812Controller
             if (reset)
                 bits_timing[idx++] = 100;// reset
 
-            for (int i = 0; i < this.data.Length; i++)
+            for (var i = 0; i < this.data.Length; i++)
             {
-                for (int b = 7; b >= 0; b--)
+                for (var b = 7; b >= 0; b--)
                 {
-                    if ((data[i] & (1 << b)) > 0)
+                    if ((this.data[i] & (1 << b)) > 0)
                     {
                         bits_timing[idx++] = BIT_ONE;
                         bits_timing[idx++] = BIT_ZERO;

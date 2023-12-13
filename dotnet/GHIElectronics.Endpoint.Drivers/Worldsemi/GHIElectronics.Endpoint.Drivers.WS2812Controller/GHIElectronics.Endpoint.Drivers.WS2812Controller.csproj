@@ -14,7 +14,7 @@
     <PackageTags>Endpoint</PackageTags>
     <AssemblyVersion>0.0.2</AssemblyVersion>
     <FileVersion>0.0.2</FileVersion>
-    <Version>0.0.2</Version>
+    <Version>0.0.2.5-alpha</Version>
     <Authors>GHI Electronics, LLC</Authors>
 	<Owners>GHI Electronics, LLC</Owners>
     <Company>GHI Electronics, LLC</Company>
@@ -27,10 +27,9 @@
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
-
+  
   <ItemGroup>
-	<PackageReference Include="GHIElectronics.Endpoint.Core" Version="0.0.2.4" />	
-    <PackageReference Include="GHIElectronics.Endpoint.Devices.DigitalSignal" Version="0.0.2.4" />
+    <PackageReference Include="GHIElectronics.Endpoint.Devices.DigitalSignal" Version="0.0.2.5-alpha" />
   </ItemGroup>
 
 </Project>

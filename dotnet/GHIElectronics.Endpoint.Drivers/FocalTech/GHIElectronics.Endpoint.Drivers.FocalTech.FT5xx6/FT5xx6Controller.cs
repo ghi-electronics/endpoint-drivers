@@ -1,4 +1,4 @@
-﻿using GHIElectronics.Endpoint.Devices.I2c;
+using GHIElectronics.Endpoint.Devices.I2c;
 using static GHIElectronics.Endpoint.Pins.STM32MP1;
 using System.Device.I2c;
 using System.Device.Gpio;
@@ -7,7 +7,7 @@ using System.Device.Gpio.Drivers;
 
 namespace GHIElectronics.Endpoint.Drivers.FocalTech.FT5xx6
 {
-    
+
     public class FT5xx6Controller : IDisposable
     {
         public class TouchEventArgs : EventArgs
@@ -52,7 +52,7 @@ namespace GHIElectronics.Endpoint.Drivers.FocalTech.FT5xx6
 
         private readonly byte[] addressBuffer = new byte[1];
         private readonly byte[] read32 = new byte[32];
-        private readonly I2cController i2c;
+        private readonly I2cDevice i2c;
         private readonly int interruptPin;
 
         public event TouchEventHandler TouchDown;
@@ -67,37 +67,39 @@ namespace GHIElectronics.Endpoint.Drivers.FocalTech.FT5xx6
 
         public int SampleCount { get; set; } = 5;
 
-        public static byte DeviceAddress = 0x38;
+        public byte DeviceAddress => 0x38;
 
         private int portNumber = -1;
         private int pinNumber = -1;
 
         private GpioController gpioController;
-        public FT5xx6Controller(I2cController i2c, int interrupt)
+        public FT5xx6Controller(int i2cPort, int interruptPin)
         {
-            this.i2c = i2c;
+            var setting = new I2cConnectionSettings(i2cPort, this.DeviceAddress);            
 
-            this.interruptPin = interrupt;
+            this.i2c = I2cDevice.Create(setting);
+
+            this.interruptPin = interruptPin;
 
             this.portNumber = this.interruptPin / 16;
             this.pinNumber = this.interruptPin % 16;
 
-            var gpioDriver = new LibGpiodDriver(portNumber);
+            var gpioDriver = new LibGpiodDriver(this.portNumber);
             this.gpioController = new GpioController(PinNumberingScheme.Logical, gpioDriver);
 
-            gpioController.OpenPin(pinNumber);
-            gpioController.SetPinMode(pinNumber, PinMode.Input);
+            this.gpioController.OpenPin(this.pinNumber);
+            this.gpioController.SetPinMode(this.pinNumber, PinMode.Input);
 
-            gpioController.RegisterCallbackForPinValueChangedEvent(pinNumber, PinEventTypes.Falling, OnInterrupt);
+            this.gpioController.RegisterCallbackForPinValueChangedEvent(this.pinNumber, PinEventTypes.Falling, this.OnInterrupt);
 
         }
-        
+
 
         private void OnInterrupt(object sender, PinValueChangedEventArgs e)
         {
             try
             {
-                this.i2c.WriteRead(this.addressBuffer,  this.read32);
+                this.i2c.WriteRead(this.addressBuffer, this.read32);
 
                 if (this.read32[1] != 0 && this.GestureReceived != null)
                     this.GestureReceived(this, new GestureEventArgs((Gesture)this.read32[1]));
@@ -154,9 +156,9 @@ namespace GHIElectronics.Endpoint.Drivers.FocalTech.FT5xx6
         {
             this.i2c.Dispose();
 
-            this.gpioController.UnregisterCallbackForPinValueChangedEvent(pinNumber,  OnInterrupt);
-            this.gpioController.ClosePin(pinNumber);
-            
+            this.gpioController.UnregisterCallbackForPinValueChangedEvent(this.pinNumber, this.OnInterrupt);
+            this.gpioController.ClosePin(this.pinNumber);
+
         }
 
     }
