@@ -1,5 +1,4 @@
-using GHIElectronics.Endpoint.Devices.I2c;
-using static GHIElectronics.Endpoint.Pins.STM32MP1;
+
 using System.Device.I2c;
 using System.Device.Gpio;
 using Iot.Device.Mcp23xxx;
