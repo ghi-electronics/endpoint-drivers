@@ -12,11 +12,9 @@ namespace GHIElectronics.Endpoint.Drivers.Omnivision.OV5640 {
 
         GpioController gpioResetController;
         GpioController gpioPwdController;
-        public OV5640Controller(int width, int height) : this(width, height, 100) { }
-
-        public OV5640Controller(int width, int height, int imageQuality) : this(width, height, imageQuality, EPM815.I2c.I2c6, Gpio.Pin.NONE, Gpio.Pin.NONE) { }
-
-        public OV5640Controller(int width, int height, int imageQuality, int i2cController, int resetPin, int pwdPin) : base(width, height, imageQuality) {
+       
+       
+        public OV5640Controller(DcmiSetting setting, int i2cController, int resetPin, int pwdPin) : base(setting) {
             if (i2cController != EPM815.I2c.I2c6) {
                 throw new Exception("Support I2c6 only");
             }
