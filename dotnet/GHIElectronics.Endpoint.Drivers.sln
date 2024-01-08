@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GHIElectronics.Endpoint.Drivers.FocalTech.FT5xx6", "GHIElectronics.Endpoint.Drivers\FocalTech\GHIElectronics.Endpoint.Drivers.FocalTech.FT5xx6\GHIElectronics.Endpoint.Drivers.FocalTech.FT5xx6.csproj", "{0800CBB7-317D-40A9-A083-1EBC81C1E630}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Drivers.FocalTech.FT5xx6", "GHIElectronics.Endpoint.Drivers\FocalTech\GHIElectronics.Endpoint.Drivers.FocalTech.FT5xx6\GHIElectronics.Endpoint.Drivers.FocalTech.FT5xx6.csproj", "{0800CBB7-317D-40A9-A083-1EBC81C1E630}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Drivers.WS2812Controller", "GHIElectronics.Endpoint.Drivers\Worldsemi\GHIElectronics.Endpoint.Drivers.WS2812Controller\GHIElectronics.Endpoint.Drivers.WS2812Controller.csproj", "{1BACB6B5-20A9-4679-974C-DD017EF71722}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GHIElectronics.Endpoint.Drivers.Omnivision.OV5640", "GHIElectronics.Endpoint.Drivers\Omnivision\GHIElectronics.Endpoint.Drivers.Omnivision.OV5640\GHIElectronics.Endpoint.Drivers.Omnivision.OV5640.csproj", "{B00222FF-6D52-47B7-87A7-1732552AA906}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{1BACB6B5-20A9-4679-974C-DD017EF71722}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BACB6B5-20A9-4679-974C-DD017EF71722}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BACB6B5-20A9-4679-974C-DD017EF71722}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B00222FF-6D52-47B7-87A7-1732552AA906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B00222FF-6D52-47B7-87A7-1732552AA906}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B00222FF-6D52-47B7-87A7-1732552AA906}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B00222FF-6D52-47B7-87A7-1732552AA906}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
