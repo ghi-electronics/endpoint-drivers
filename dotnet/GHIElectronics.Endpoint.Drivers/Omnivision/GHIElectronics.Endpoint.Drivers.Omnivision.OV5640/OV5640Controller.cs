@@ -48,8 +48,12 @@ namespace GHIElectronics.Endpoint.Drivers.Omnivision.OV5640 {
                 this.gpioPwdController.OpenPin(Gpio.GetPin(this.pwdPin), PinMode.Output);
             }
 
-            this.Reset();
             this.SetPowerDown(false);
+
+            this.Reset();
+            
+
+            Thread.Sleep(10);
 
             this.Open();
         }
