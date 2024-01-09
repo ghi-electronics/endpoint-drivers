@@ -27,10 +27,7 @@ namespace GHIElectronics.Endpoint.Drivers.Omnivision.OV5640 {
                 throw new Exception($"{pwdPin} is already in used");
             }
 
-            var script_insmod = new Script("modprobe", "/.", $"ov5640");
-            script_insmod.Start();
-
-            Thread.Sleep(100); // wait for ov5640 init
+            
             EPM815.I2c.Initialize(i2cController);
 
             if (resetPin != Gpio.Pin.NONE) {
@@ -51,9 +48,11 @@ namespace GHIElectronics.Endpoint.Drivers.Omnivision.OV5640 {
             this.SetPowerDown(false);
 
             this.Reset();
-            
+                       
+            var script_insmod = new Script("modprobe", "/.", $"ov5640");
+            script_insmod.Start();
 
-            Thread.Sleep(10);
+            Thread.Sleep(100); // wait for ov5640 init
 
             this.Open();
         }
@@ -63,9 +62,9 @@ namespace GHIElectronics.Endpoint.Drivers.Omnivision.OV5640 {
                 return;
 
             this.gpioResetController.Write(Gpio.GetPin(this.resetPin), false);
-            Thread.Sleep(10);
+            Thread.Sleep(20);
             this.gpioResetController.Write(Gpio.GetPin(this.resetPin), true);
-            Thread.Sleep(10);
+            Thread.Sleep(100);
         }
 
         public void SetPowerDown(bool enable) {
