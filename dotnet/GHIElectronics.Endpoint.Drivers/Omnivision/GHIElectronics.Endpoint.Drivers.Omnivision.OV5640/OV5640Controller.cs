@@ -1,6 +1,7 @@
 using System.Device.Gpio;
 using System.Device.Gpio.Drivers;
 using GHIElectronics.Endpoint.Core;
+using GHIElectronics.Endpoint.Devices.Camera;
 using GHIElectronics.Endpoint.Devices.Dcmi;
 using Microsoft.VisualBasic;
 using static GHIElectronics.Endpoint.Core.EPM815;
@@ -14,7 +15,7 @@ namespace GHIElectronics.Endpoint.Drivers.Omnivision.OV5640 {
         GpioController gpioPwdController;
        
        
-        public OV5640Controller(DcmiSetting setting, int i2cController, int resetPin, int pwdPin) : base(setting) {
+        public OV5640Controller(int i2cController, int resetPin, int pwdPin ) : base() {
             if (i2cController != EPM815.I2c.I2c6) {
                 throw new Exception("Support I2c6 only");
             }
@@ -45,10 +46,13 @@ namespace GHIElectronics.Endpoint.Drivers.Omnivision.OV5640 {
                 this.gpioPwdController.OpenPin(Gpio.GetPin(this.pwdPin), PinMode.Output);
             }
 
+            Thread.Sleep(5);
+            this.Reset();
+
             this.SetPowerDown(false);
 
-            this.Reset();
-                       
+            Thread.Sleep(20);
+
             var script_insmod = new Script("modprobe", "/.", $"ov5640");
             script_insmod.Start();
 
@@ -64,7 +68,7 @@ namespace GHIElectronics.Endpoint.Drivers.Omnivision.OV5640 {
             this.gpioResetController.Write(Gpio.GetPin(this.resetPin), false);
             Thread.Sleep(20);
             this.gpioResetController.Write(Gpio.GetPin(this.resetPin), true);
-            Thread.Sleep(100);
+            Thread.Sleep(20);
         }
 
         public void SetPowerDown(bool enable) {
