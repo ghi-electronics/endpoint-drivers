@@ -8,8 +8,8 @@ using static GHIElectronics.Endpoint.Core.EPM815;
 
 namespace GHIElectronics.Endpoint.Drivers.Omnivision.OV5640 {
     public class OV5640Controller : DcmiController {
-        int resetPin;
-        int pwdPin;
+        int resetPin = -1;
+        int pwdPin = -1;
 
         GpioController gpioResetController;
         GpioController gpioPwdController;
@@ -45,6 +45,8 @@ namespace GHIElectronics.Endpoint.Drivers.Omnivision.OV5640 {
                 this.gpioPwdController = new GpioController(PinNumberingScheme.Logical, new LibGpiodDriver(Gpio.GetPort(this.pwdPin)));
                 this.gpioPwdController.OpenPin(Gpio.GetPin(this.pwdPin), PinMode.Output);
             }
+            
+            this.SetPowerDown(false);
 
             Thread.Sleep(5);
             this.Reset();
@@ -61,7 +63,7 @@ namespace GHIElectronics.Endpoint.Drivers.Omnivision.OV5640 {
             this.Open();
         }
 
-        private void Reset() {
+        public void Reset() {
             if (this.resetPin == Gpio.Pin.NONE)
                 return;
 
