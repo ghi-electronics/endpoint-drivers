@@ -10,7 +10,7 @@
 	<Title>Endpoint</Title>
 	<PackageId>GHIElectronics.Endpoint.Drivers.Omnivision.OV5640</PackageId>
     <Description>The OV5640 driver for Endpoint.</Description>
-    <Copyright>Copyright GHI Electronics, LLC 2023</Copyright>
+    <Copyright>Copyright GHI Electronics, LLC 2024</Copyright>
     <PackageProjectUrl>https://ghielectronics.com/</PackageProjectUrl>
     <PackageTags>Endpoint</PackageTags>
     <AssemblyVersion>0.0.2.7</AssemblyVersion>
