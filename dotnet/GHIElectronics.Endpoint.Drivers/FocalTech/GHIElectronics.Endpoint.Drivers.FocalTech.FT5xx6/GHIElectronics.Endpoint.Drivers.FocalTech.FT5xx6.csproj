@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
 	
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>	
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>	
 	<Title>Endpoint</Title>
 	<PackageId>GHIElectronics.Endpoint.Drivers.FocalTech.FT5xx6</PackageId>
     <Description>The FocalTech touch driver for Endpoint.</Description>
@@ -31,6 +31,10 @@
   <ItemGroup>
     <PackageReference Include="GHIElectronics.Endpoint.Core" Version="0.0.2.7-alpha" />
   </ItemGroup>
+  
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="call ..\..\..\dopacknuget.bat $(MSBuildProjectName)" />
+  </Target>
 
 
 </Project>

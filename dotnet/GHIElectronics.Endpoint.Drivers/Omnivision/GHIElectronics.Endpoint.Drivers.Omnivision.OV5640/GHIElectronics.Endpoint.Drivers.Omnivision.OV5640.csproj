@@ -6,7 +6,7 @@
     <Nullable>disable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>	
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>	
 	<Title>Endpoint</Title>
 	<PackageId>GHIElectronics.Endpoint.Drivers.Omnivision.OV5640</PackageId>
     <Description>The OV5640 driver for Endpoint.</Description>
@@ -28,9 +28,13 @@
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
-
+  
   <ItemGroup>
-  	<PackageReference Include="GHIElectronics.Endpoint.Devices.Dcmi" Version="0.0.2.7-alpha" />    
+    <PackageReference Include="GHIElectronics.Endpoint.Devices.Dcmi" Version="0.0.2.7-alpha" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="call ..\..\..\dopacknuget.bat $(MSBuildProjectName)" />
+  </Target>
 
 </Project>

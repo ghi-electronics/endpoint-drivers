@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
 	
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>	
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>	
 	<Title>Endpoint</Title>
 	<PackageId>GHIElectronics.Endpoint.Driver.WS2812Controller</PackageId>
     <Description>The WS2812Controller driver for Endpoint.</Description>
@@ -31,5 +31,9 @@
   <ItemGroup>
     <PackageReference Include="GHIElectronics.Endpoint.Devices.DigitalSignal" Version="0.0.2.7-alpha" />
   </ItemGroup>
+  
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="call ..\..\..\dopacknuget.bat $(MSBuildProjectName)" />
+  </Target>
 
 </Project>
