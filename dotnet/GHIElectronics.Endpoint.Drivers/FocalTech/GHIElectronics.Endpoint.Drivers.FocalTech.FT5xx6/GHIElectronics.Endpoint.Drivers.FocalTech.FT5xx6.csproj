@@ -33,7 +33,7 @@
   </ItemGroup>
   
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="call ..\..\..\dopacknuget.bat $(MSBuildProjectName)" />
+    <Exec Command="call ..\..\dopacknuget.bat $(MSBuildProjectName)" />
   </Target>
 
 
