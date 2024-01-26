@@ -13,9 +13,9 @@
     <Copyright>Copyright GHI Electronics, LLC 2024</Copyright>
     <PackageProjectUrl>https://ghielectronics.com/</PackageProjectUrl>
     <PackageTags>Endpoint</PackageTags>
-    <AssemblyVersion>0.0.2.7</AssemblyVersion>
-    <FileVersion>0.0.2.7</FileVersion>
-    <Version>0.0.2.7-alpha</Version>
+    <AssemblyVersion>0.1.0.0</AssemblyVersion>
+    <FileVersion>0.1.0.0</FileVersion>
+    <Version>0.1.0.0-beta</Version>
     <Authors>GHI Electronics, LLC</Authors>
 	<Owners>GHI Electronics, LLC</Owners>
     <Company>GHI Electronics, LLC</Company>
@@ -30,7 +30,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="GHIElectronics.Endpoint.Devices.Dcmi" Version="0.0.2.7-alpha" />
+    <PackageReference Include="GHIElectronics.Endpoint.Devices.Dcmi" Version="0.1.0.0-beta" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
