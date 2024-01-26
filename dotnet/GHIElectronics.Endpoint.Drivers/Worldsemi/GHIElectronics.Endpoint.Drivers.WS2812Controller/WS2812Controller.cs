@@ -63,7 +63,7 @@ namespace GHIElectronics.Endpoint.Drivers.WS2812Controller
                 }
             }
            
-            this.signal.Generate(bits_timing, 0, bits_timing.Length, MULTIPLER, 1);
+            this.signal.Generate(bits_timing, 0, bits_timing.Length, MULTIPLER, Core.EPM815.Gpio.Edge.Rising);
         }
 
         public void Clear()
@@ -76,7 +76,7 @@ namespace GHIElectronics.Endpoint.Drivers.WS2812Controller
         {
             var resetData = new uint[] { RESETPULSE / MULTIPLER, 1 };
 
-            this.signal.Generate(resetData, 0, resetData.Length, MULTIPLER, 1);
+            this.signal.Generate(resetData, 0, resetData.Length, MULTIPLER, Core.EPM815.Gpio.Edge.Rising);
         }
     }
 }
