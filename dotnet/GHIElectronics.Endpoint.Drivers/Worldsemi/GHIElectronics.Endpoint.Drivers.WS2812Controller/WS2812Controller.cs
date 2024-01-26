@@ -62,7 +62,11 @@ namespace GHIElectronics.Endpoint.Drivers.WS2812Controller
                     }
                 }
             }
-           
+
+            while (this.signal.CanGeneratePulse == false) {
+                Thread.Sleep(1);
+            }
+
             this.signal.Generate(bits_timing, 0, bits_timing.Length, MULTIPLER, Core.EPM815.Gpio.Edge.Rising);
         }
 
