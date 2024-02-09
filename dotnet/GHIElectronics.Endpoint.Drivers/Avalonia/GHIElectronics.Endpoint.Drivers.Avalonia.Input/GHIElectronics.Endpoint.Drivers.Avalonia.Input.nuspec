@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>GHIElectronics.Endpoint.Drivers.Avalonia.Input</id>
+    <version>0.0.1-alpha</version>
+    <title>Endpoint</title>	
+    <owners>GHI Electronics, LLC</owners>    
+    <authors>GHI Electronics, LLC</authors>
+    <icon>icon.png</icon>
+    <projectUrl>https://ghielectronics.com/</projectUrl>
+	<licenseUrl>http://files.ghielectronics.com/downloads/TinyCLR/License.txt</licenseUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>The Avalonia input touch driver for Endpoint.</description>
+    <copyright>Copyright GHI Electronics, LLC 2024</copyright>
+    <tags>Endpoint TinyCLR TinyCLROS GHI</tags>    
+    <dependencies>
+      <group targetFramework="net8.0">
+        <dependency id="GHIElectronics.Endpoint.Core" version="0.1.0.0-beta" exclude="Build,Analyzers" />   
+        <dependency id="Avalonia.LinuxFramebuffer" version="11.0.2" exclude="Build,Analyzers" />   
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\..\images\icon.png" target="" />
+	<file src="bin\release\net8.0\GHIElectronics.Endpoint.Drivers.Avalonia.Input.dll" target="lib\net8.0" />
+  </files>
+</package>
