@@ -103,7 +103,7 @@ namespace GHIElectronics.Endpoint.Drivers.Avalonia.Input {
             this.enableOnscreenKeyboard = true;
             this.showOnscreenKeyboard = false;
 
-            this.onscreenKeyboard = new OnScreenKeyboard(displayController, 0, 0);
+            this.onscreenKeyboard = new OnScreenKeyboard(displayController);
         }
 
         private async  void InputThread() {

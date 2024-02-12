@@ -15,8 +15,8 @@ namespace GHIElectronics.Endpoint.Drivers.Avalonia.Input {
 
         SKPaint colorWhiteFill = new SKPaint() { Style = SKPaintStyle.Fill, Color = SKColors.White };
         SKPaint colorBlackFill = new SKPaint() { Style = SKPaintStyle.Fill, Color = SKColors.Black };
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public int Width { get; internal set; }
+        public int Height { get; internal set; }
 
         SKBitmap bitmap;
         KeyboardView active;
@@ -38,16 +38,26 @@ namespace GHIElectronics.Endpoint.Drivers.Avalonia.Input {
         private bool doRefresh = true;
 
         SKCanvas canvas;
-        public OnScreenKeyboard(DisplayController displayController, int width, int height) {
-            this.Width = width;
-            this.Height = height;
+
+        private float scaleXY;
+
+        const float IMG_RESOURCE_WIDTH = 800;
+        const float IMG_RESOURCE_HEIGHT = 320;
+        public OnScreenKeyboard(DisplayController displayController) {
+
             this.lockObj = new object();
 
-            bitmap = new SKBitmap(480, 272, SKImageInfo.PlatformColorType, SKAlphaType.Premul);
+            bitmap = new SKBitmap(displayController.Configuration.Width, displayController.Configuration.Height, SKImageInfo.PlatformColorType, SKAlphaType.Premul);
 
             this.displayController = displayController;
 
-            canvas = new SKCanvas(bitmap);
+            this.scaleXY = displayController.Configuration.Width / IMG_RESOURCE_WIDTH;
+
+            this.Width = (int)(IMG_RESOURCE_WIDTH * this.scaleXY); 
+            this.Height = (int)(IMG_RESOURCE_HEIGHT * this.scaleXY);
+
+
+
 
             this.ShowView(KeyboardViewId.Lowercase);
 
@@ -70,6 +80,10 @@ namespace GHIElectronics.Endpoint.Drivers.Avalonia.Input {
             //this.SourceText = string.Empty;
             this.doRefresh = true;
 
+            canvas = new SKCanvas(bitmap);
+
+            //canvas.Scale(this.scaleXY);
+
             while (show) {
                 if (this.TouchPoint.Evt == TouchEvent.Released) {
 
@@ -85,11 +99,13 @@ namespace GHIElectronics.Endpoint.Drivers.Avalonia.Input {
                 if (this.doRefresh) {
                     canvas.Clear(SKColors.Black);
                     DrawInputTextBox(this.InitialText);
-                    canvas.DrawBitmap(active.Image, this.offsetX, this.offsetY);
+                    canvas.DrawBitmap(active.Image, this.offsetX, this.offsetY);                    
 
                     this.data565 = bitmap.Copy(SKColorType.Rgb565).Bytes;
 
                     this.doRefresh = false;
+
+                    
                 }
 
                 if (this.data565 != null)
@@ -101,41 +117,43 @@ namespace GHIElectronics.Endpoint.Drivers.Avalonia.Input {
 
         private void DrawInputTextBox(string text) {
             SKFont sKFont = new SKFont();
-            sKFont.Size = 20;
+            sKFont.Size = 35 * scaleXY;
 
             SKTextBlob textBlob;
             // the rectangle
-            var rect = SKRect.Create(0, 55, 480, 25);
+            var rect = SKRect.Create(0, 0, displayController.Configuration.Width, displayController.Configuration.Height - this.Height);
             canvas.DrawRect(rect, colorWhiteFill);
 
             // draw fill
             if (text != string.Empty) {
                 textBlob = SKTextBlob.Create(text, sKFont);
 
-                canvas.DrawText(textBlob, 2, 55 + 2 + sKFont.Size, colorBlackFill);
+                canvas.DrawText(textBlob, 2, 2 + sKFont.Size, colorBlackFill);
             }
         }
 
         private void ShowView(KeyboardViewId id) {
             this.CreateView(id);
 
-            this.scaleX = 1;// this.active.Image.Width / (double)this.image.Width;
-            this.scaleY = 1;// this.active.Image.Height / (double)this.image.Height;
+            this.scaleX = this.scaleXY;
+            this.scaleY = this.scaleXY; 
             this.offsetX = 0;
-            this.offsetY = 80;// this.input.Height;
+            this.offsetY = this.displayController.Configuration.Height - this.Height;// this.input.Height;
+
         }
 
         private void CreateView(KeyboardViewId id) {
-            //var hf = 40;
-            //var sz = 80;
-            //var szh = 120;
+            var hf = (int)(40 * this.scaleXY);
+            var sz = (int)(80 * this.scaleXY);
+            var szh = (int)(120 * this.scaleXY);
 
-            var hf = 24;
-            var sz = 48;
-            var szh = 72;
+            //var hf = 24;
+            //var sz = 48;
+            //var szh = 72;
 
             var full = new[] { sz, sz, sz, sz, sz, sz, sz, sz, sz, sz };
             SKBitmap image = null;
+            SKImageInfo info = new SKImageInfo((int)this.Width, (int)this.Height);
 
             this.active = new KeyboardView { RowHeight = sz };
 
@@ -143,8 +161,11 @@ namespace GHIElectronics.Endpoint.Drivers.Avalonia.Input {
                 case KeyboardViewId.Lowercase:
 
                     var img1 = Resources.Keyboard_Lowercase;
-                    var info1 = new SKImageInfo(480, 192);
-                    image = SKBitmap.Decode(img1, info1);
+                    var info1 = new SKImageInfo((int)IMG_RESOURCE_WIDTH, (int)IMG_RESOURCE_HEIGHT);
+                    var image1 = SKBitmap.Decode(img1, info1);
+                    image = image1.Resize(info, SKFilterQuality.Low);
+
+
 
                     this.active.RowColumnOffset = new[] { 0, hf, 0, 0 };
                     this.active.ColumnWidth = new[] {
@@ -170,8 +191,9 @@ namespace GHIElectronics.Endpoint.Drivers.Avalonia.Input {
 
                 case KeyboardViewId.Uppercase:
                     var img2 = Resources.Keyboard_Uppercase;
-                    var info2 = new SKImageInfo(480, 192);
-                    image = SKBitmap.Decode(img2, info2);
+                    var info2 = new SKImageInfo((int)IMG_RESOURCE_WIDTH, (int)IMG_RESOURCE_HEIGHT);
+                    var image2 = SKBitmap.Decode(img2, info2);
+                    image = image2.Resize(info, SKFilterQuality.Low);
 
                     this.active.RowColumnOffset = new[] { 0, hf, 0, 0 };
                     this.active.ColumnWidth = new[] {
@@ -197,8 +219,9 @@ namespace GHIElectronics.Endpoint.Drivers.Avalonia.Input {
 
                 case KeyboardViewId.Numbers:
                     var img3 = Resources.Keyboard_Numbers;
-                    var info3 = new SKImageInfo(480, 192);
-                    image = SKBitmap.Decode(img3, info3);
+                    var info3 = new SKImageInfo((int)IMG_RESOURCE_WIDTH, (int)IMG_RESOURCE_HEIGHT);
+                    var image3 = SKBitmap.Decode(img3, info3);
+                    image = image3.Resize(info, SKFilterQuality.Low);
 
                     this.active.RowColumnOffset = new[] { 0, 0, 0, 0 };
                     this.active.ColumnWidth = new[] {
@@ -224,8 +247,10 @@ namespace GHIElectronics.Endpoint.Drivers.Avalonia.Input {
 
                 case KeyboardViewId.Symbols:
                     var img4 = Resources.Keyboard_Symbols;
-                    var info4 = new SKImageInfo(480, 192);
-                    image = SKBitmap.Decode(img4, info4);
+                    var info4 = new SKImageInfo((int)IMG_RESOURCE_WIDTH, (int)IMG_RESOURCE_HEIGHT);
+                    var image4 = SKBitmap.Decode(img4, info4);
+
+                    image = image4.Resize(info, SKFilterQuality.Low);
 
                     this.active.RowColumnOffset = new[] { 0, 0, 0, 0 };
                     this.active.ColumnWidth = new[] {
@@ -272,8 +297,8 @@ namespace GHIElectronics.Endpoint.Drivers.Avalonia.Input {
         }
 
         public void HandleKeys(TouchPoint e) {
-            var x = (int)((e.X - this.offsetX) * this.scaleX);
-            var y = (int)((e.Y - this.offsetY) * this.scaleY);
+            var x = (int)((e.X - this.offsetX) );
+            var y = (int)((e.Y - this.offsetY) );
 
             var row = y / this.active.RowHeight;
             var column = 0;
