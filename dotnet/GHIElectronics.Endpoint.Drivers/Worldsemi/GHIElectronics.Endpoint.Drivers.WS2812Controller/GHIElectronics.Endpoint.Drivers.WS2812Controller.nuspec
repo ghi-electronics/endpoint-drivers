@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>GHIElectronics.Endpoint.Drivers.WS2812Controller</id>
-    <version>0.1.0.0-beta</version>
+    <version>0.1.1-beta</version>
     <title>Endpoint</title>	
     <owners>GHI Electronics, LLC</owners>    
     <authors>GHI Electronics, LLC</authors>
@@ -15,7 +15,7 @@
     <tags>Endpoint TinyCLR TinyCLROS GHI</tags>    
     <dependencies>
       <group targetFramework="net8.0">        
-        <dependency id="GHIElectronics.Endpoint.Devices.DigitalSignal" version="0.1.0.0-beta" exclude="Build,Analyzers" />        
+        <dependency id="GHIElectronics.Endpoint.Devices.DigitalSignal" version="0.1.1-beta" exclude="Build,Analyzers" />        
       </group>
     </dependencies>
   </metadata>
