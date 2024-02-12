@@ -19,8 +19,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Avalonia\src\Linux\Avalonia.LinuxFramebuffer\Avalonia.LinuxFramebuffer.csproj" />
-    <ProjectReference Include="..\..\..\..\..\Endpoint-Libraries\Dotnet\GHIElectronics.Endpoint.Libraries\GHIElectronics.Endpoint.Devices.Display\GHIElectronics.Endpoint.Devices.Display.csproj" />
+	<PackageReference Include="Avalonia.LinuxFramebuffer" Version="[11.0.2]" />
+    <PackageReference Include="GHIElectronics.Endpoint.Devices.Display" Version="0.1.0-beta" />
   </ItemGroup>
 
   <ItemGroup>
