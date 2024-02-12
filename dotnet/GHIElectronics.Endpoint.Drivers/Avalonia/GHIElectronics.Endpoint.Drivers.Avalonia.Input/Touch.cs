@@ -61,10 +61,5 @@ namespace GHIElectronics.Endpoint.Drivers.Avalonia.Input {
             }
         }
 
-        internal void HandleKey(TouchPoint touchpoint) {
-
-
-        }
-
     }
 }
