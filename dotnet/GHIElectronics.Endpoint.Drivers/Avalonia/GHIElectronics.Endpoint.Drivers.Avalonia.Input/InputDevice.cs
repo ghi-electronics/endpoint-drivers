@@ -1,4 +1,6 @@
 using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Presenters;
 using Avalonia.Input;
 using Avalonia.Input.Raw;
 using Avalonia.LinuxFramebuffer.Input;
@@ -112,19 +114,32 @@ namespace GHIElectronics.Endpoint.Drivers.Avalonia.Input {
                     if (TouchPoint.Evt != TouchEvent.None) {
                         if (this.showOnscreenKeyboard == false) {
                             this.TouchDevice.HandlePointer(TouchPoint);
-                            bool elementInputDetected = false;
+                            bool needShowOnScreenKeyboard = false;
                             bool actionDone = false;
                             Action x = () => {
 
                                 if (TouchPoint.Evt == TouchEvent.Released && this.inputRoot.PointerOverElement != null) {
-                                    var element = this.inputRoot.PointerOverElement.GetInputElementsAt(new Point(TouchPoint.X, TouchPoint.Y)).FirstOrDefault();
 
-                                    if (element != null) {
-                                        elementInputDetected = false;
+                                    var pointerOverElement = this.inputRoot.PointerOverElement;
+                                    var elements = pointerOverElement.GetInputElementsAt(new Point(TouchPoint.X, TouchPoint.Y));
+                                    var elementlast = elements.LastOrDefault(); 
+                                    var element = pointerOverElement.GetInputElementsAt(new Point(TouchPoint.X, TouchPoint.Y)).FirstOrDefault();
+                                    
+
+                                    var type = pointerOverElement.GetType();
+                                    var focusable = pointerOverElement.Focusable;
+
+                                    
+                                    if (type == typeof(TextPresenter) && pointerOverElement.IsEnabled) {
+                                        
+                                        this.keyboard.SetFocusedElement(this.inputRoot.PointerOverElement, NavigationMethod.Unspecified, KeyModifiers.None);
+                                        needShowOnScreenKeyboard = true;
+                                        focusable = pointerOverElement.Focusable;
+                                        this.onscreenKeyboard.InitialText = ((TextPresenter)pointerOverElement).Text?? string.Empty; 
+
                                     }
                                     else {
-                                        this.keyboard.SetFocusedElement(this.inputRoot.PointerOverElement, NavigationMethod.Unspecified, KeyModifiers.None);
-                                        elementInputDetected = true;
+                                        needShowOnScreenKeyboard = false;
                                     }
                                 }
                                 actionDone = true;
@@ -133,10 +148,10 @@ namespace GHIElectronics.Endpoint.Drivers.Avalonia.Input {
                             Dispatcher.UIThread.Invoke(x);
 
                             while (!actionDone) {
-                                Thread.Sleep(10);
+                                Thread.Sleep(1);
                             }
 
-                            if (elementInputDetected && this.enableOnscreenKeyboard) {
+                            if (needShowOnScreenKeyboard && this.enableOnscreenKeyboard) {
                                 this.showOnscreenKeyboard = true;
                             }
                         }
@@ -152,7 +167,8 @@ namespace GHIElectronics.Endpoint.Drivers.Avalonia.Input {
                     }
 
                     if (this.showOnscreenKeyboard) {
-                        
+
+                       
                         await Dispatcher.UIThread.InvokeAsync(this.onscreenKeyboard.Show);
 
                         var e = new RawTextInputEventArgs(this.keyboard, (ulong)(DateTime.Now.Ticks / 10000), this.inputRoot, this.onscreenKeyboard.SourceText);

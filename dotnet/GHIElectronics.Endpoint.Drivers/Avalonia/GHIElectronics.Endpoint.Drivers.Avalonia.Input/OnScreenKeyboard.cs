@@ -21,8 +21,8 @@ namespace GHIElectronics.Endpoint.Drivers.Avalonia.Input {
         SKBitmap bitmap;
         KeyboardView active;
 
-        private string inputText = string.Empty;
-        public string SourceText { get; set; }
+        public string InitialText = string.Empty;
+        public string SourceText { get; set; } = string.Empty;
 
         private DisplayController displayController;
 
@@ -66,8 +66,8 @@ namespace GHIElectronics.Endpoint.Drivers.Avalonia.Input {
         public void Show() {
 
             this.show = true;
-            this.inputText = string.Empty;
-            this.SourceText = string.Empty;
+            //this.inputText = string.Empty;
+            //this.SourceText = string.Empty;
             this.doRefresh = true;
 
             while (show) {
@@ -84,7 +84,7 @@ namespace GHIElectronics.Endpoint.Drivers.Avalonia.Input {
 
                 if (this.doRefresh) {
                     canvas.Clear(SKColors.Black);
-                    DrawInputTextBox(this.inputText);
+                    DrawInputTextBox(this.InitialText);
                     canvas.DrawBitmap(active.Image, this.offsetX, this.offsetY);
 
                     this.data565 = bitmap.Copy(SKColorType.Rgb565).Bytes;
@@ -110,7 +110,7 @@ namespace GHIElectronics.Endpoint.Drivers.Avalonia.Input {
 
             // draw fill
             if (text != string.Empty) {
-                textBlob = SKTextBlob.Create(text.ToUpper(), sKFont);
+                textBlob = SKTextBlob.Create(text, sKFont);
 
                 canvas.DrawText(textBlob, 2, 55 + 2 + sKFont.Size, colorBlackFill);
             }
@@ -142,7 +142,7 @@ namespace GHIElectronics.Endpoint.Drivers.Avalonia.Input {
             switch (id) {
                 case KeyboardViewId.Lowercase:
 
-                    var img1 = Resources.Keyboard_Uppercase;
+                    var img1 = Resources.Keyboard_Lowercase;
                     var info1 = new SKImageInfo(480, 192);
                     image = SKBitmap.Decode(img1, info1);
 
@@ -251,19 +251,17 @@ namespace GHIElectronics.Endpoint.Drivers.Avalonia.Input {
             }
 
             this.active.Image = image;
-
-            //this.views.Add(id, view);
         }
 
-        private void Backspace() { if (this.inputText.Length > 0) this.inputText = this.inputText.Substring(0, this.inputText.Length - 1); }
+        private void Backspace() { if (this.InitialText.Length > 0) this.InitialText = this.InitialText.Substring(0, this.InitialText.Length - 1); }
         private void Append(char c) {
-            this.inputText += c;
+            this.InitialText += c;
 
            
         }
 
         private new void Close() {
-            this.SourceText = this.inputText;
+            this.SourceText = this.InitialText;
             this.show = false;
             
         }
