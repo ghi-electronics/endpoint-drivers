@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Dri
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Drivers.Avalonia.Input", "Avalonia\GHIElectronics.Endpoint.Drivers.Avalonia.Input\GHIElectronics.Endpoint.Drivers.Avalonia.Input.csproj", "{722D2551-B503-4662-A614-A6167480E89C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GHIElectronics.TinyCLR.Drivers.Sitronix.ST7735", "Sitronix\ST7735\GHIElectronics.TinyCLR.Drivers.Sitronix.ST7735\GHIElectronics.TinyCLR.Drivers.Sitronix.ST7735.csproj", "{C098A727-3ACB-4C75-91FA-84BB44FDB8D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{722D2551-B503-4662-A614-A6167480E89C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{722D2551-B503-4662-A614-A6167480E89C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{722D2551-B503-4662-A614-A6167480E89C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C098A727-3ACB-4C75-91FA-84BB44FDB8D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C098A727-3ACB-4C75-91FA-84BB44FDB8D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C098A727-3ACB-4C75-91FA-84BB44FDB8D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C098A727-3ACB-4C75-91FA-84BB44FDB8D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
