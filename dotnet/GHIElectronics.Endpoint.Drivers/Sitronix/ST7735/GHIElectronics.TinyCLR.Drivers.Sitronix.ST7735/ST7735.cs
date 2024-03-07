@@ -331,29 +331,25 @@ namespace GHIElectronics.TinyCLR.Drivers.Sitronix.ST7735 {
         }
 
         private void SpiWrite(byte[] buffer) => this.SpiWrite(buffer, 0, buffer.Length);
-        private void SpiWrite(byte[] buffer, int offset, int count) {
+        private void SpiWrite(Span<byte> buffer, int offset, int count) {
 
-            var block = count / this.bufferSize;
-            var remain = count % this.bufferSize;
 
-            var index = 0;
+            var index = offset;
+            int len;
+
             this.gpioChipselect.Write(this.chipselect, PinValue.Low);
-            var writebuff = new byte[this.bufferSize];
-            while (block > 0) {
 
-                Array.Copy(buffer, offset + index, writebuff, 0, this.bufferSize);
-                this.spi.Write(writebuff);
-                index += this.bufferSize;
-                block--;
-
+            do {
+                // calculate the amount of spi data to send in this chunk
+                len = Math.Min(count, this.bufferSize);
+                // send the slice of data off set by the index and of length len.
+                this.spi.Write(buffer.Slice(index, len));
+                // add the length just sent to the index
+                index += len;
+                count -= len;
             }
+            while (count > 0); // repeat until all data sent.
 
-            writebuff = new byte[remain];
-            if (remain > 0) {
-
-                Array.Copy(buffer, offset + index, writebuff, 0, remain);
-                this.spi.Write(writebuff);
-            }
             this.gpioChipselect.Write(this.chipselect, PinValue.High);
         }
 
