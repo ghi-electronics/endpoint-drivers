@@ -5,7 +5,7 @@ using GHIElectronics.Endpoint.Devices.Display;
 using Iot.Device.Nmea0183.Sentences;
 using UnitsNet;
 
-namespace GHIElectronics.TinyCLR.Drivers.Sitronix.ST7735 {
+namespace GHIElectronics.Endpoint.Drivers.Sitronix.ST7735 {
     public enum ST7735CommandId : byte {
         //System
         NOP = 0x00,
