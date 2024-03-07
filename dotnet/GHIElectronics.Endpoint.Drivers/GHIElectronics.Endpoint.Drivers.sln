@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Dri
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Drivers.Avalonia.Input", "Avalonia\GHIElectronics.Endpoint.Drivers.Avalonia.Input\GHIElectronics.Endpoint.Drivers.Avalonia.Input.csproj", "{722D2551-B503-4662-A614-A6167480E89C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.TinyCLR.Drivers.Sitronix.ST7735", "Sitronix\GHIElectronics.TinyCLR.Drivers.Sitronix.ST7735\GHIElectronics.TinyCLR.Drivers.Sitronix.ST7735.csproj", "{C098A727-3ACB-4C75-91FA-84BB44FDB8D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Drivers.Sitronix.ST7735", "Sitronix\GHIElectronics.Endpoint.Drivers.Sitronix.ST7735\GHIElectronics.Endpoint.Drivers.Sitronix.ST7735.csproj", "{C098A727-3ACB-4C75-91FA-84BB44FDB8D7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GHIElectronics.Endpoint.Drivers.VirtualKeyboard", "VirtualKeyboard\GHIElectronics.Endpoint.Drivers.VirtualKeyboard\GHIElectronics.Endpoint.Drivers.VirtualKeyboard.csproj", "{065ED0F3-543C-4010-AEAA-FD08EDB1D8CC}"
 EndProject
