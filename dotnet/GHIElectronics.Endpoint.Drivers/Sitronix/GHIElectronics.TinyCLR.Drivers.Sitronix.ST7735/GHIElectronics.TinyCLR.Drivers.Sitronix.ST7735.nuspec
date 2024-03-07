@@ -21,7 +21,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\..\..\images\icon.png" target="" />
+    <file src="..\..\images\icon.png" target="" />
 	<file src="bin\release\net8.0\GHIElectronics.TinyCLR.Drivers.Sitronix.ST7735.dll" target="lib\net8.0" />
   </files>
 </package>
