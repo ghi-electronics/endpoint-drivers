@@ -134,7 +134,7 @@ namespace GHIElectronics.Endpoint.Drivers.VirtualKeyboard {
                     this.doRefresh = false;
 
                     if (this.displayController != null && this.data565 != null)
-                        this.displayController.Flush(this.data565, 0, 0, this.bitmap.Width, this.bitmap.Height);
+                        this.displayController.Flush(this.data565, 0, this.data565.Length, 0, 0, this.bitmap.Width, this.bitmap.Height, this.bitmap.Width);
                 }
 
                 Thread.Sleep(50);

@@ -359,6 +359,6 @@ namespace GHIElectronics.Endpoint.Drivers.Sitronix.ST7735 {
             this.SpiWrite(data, offset, length);
         }
 
-
+        public void Flush(byte[] data, int offset, int length, int x, int y, int width, int height, int originalWidth) => throw new NotImplementedException();
     }
 }
