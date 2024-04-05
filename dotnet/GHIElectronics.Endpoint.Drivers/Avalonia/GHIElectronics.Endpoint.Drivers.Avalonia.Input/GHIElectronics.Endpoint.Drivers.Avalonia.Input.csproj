@@ -20,7 +20,7 @@
 
   <ItemGroup>
 	<PackageReference Include="Avalonia.LinuxFramebuffer" Version="[11.0.2]" />
-    <PackageReference Include="GHIElectronics.Endpoint.Devices.Display" Version="0.1.3-beta" />
+    <PackageReference Include="GHIElectronics.Endpoint.Devices.Display" Version="0.1.4-beta" />
   </ItemGroup>
 
   <ItemGroup>
