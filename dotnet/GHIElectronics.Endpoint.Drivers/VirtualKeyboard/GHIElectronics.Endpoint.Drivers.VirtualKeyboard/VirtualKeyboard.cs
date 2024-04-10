@@ -47,7 +47,7 @@ namespace GHIElectronics.Endpoint.Drivers.VirtualKeyboard {
 
         private object lockObj;
 
-        private bool show = true;
+        private bool show = false;
         private bool doRefresh = true;
 
         SKCanvas canvas;
@@ -106,39 +106,51 @@ namespace GHIElectronics.Endpoint.Drivers.VirtualKeyboard {
         }
 
         public bool IsEnabled => this.show;
+
+        public delegate void OnShowEventHandler();
+        public event OnShowEventHandler OnShow;
         public void Show() {
 
             this.show = true;
             this.doRefresh = true;
             this.canvas = new SKCanvas(this.bitmap);
 
-            while (this.show) {
-                if (this.TouchPoint.Evt != KeyboardEvent.None) {
+            OnShow?.Invoke();
 
-                    lock (this.lockObj) {
-                        this.TouchPoint.Evt = KeyboardEvent.None;
+            while (this.show) {
+                try {
+                    if (this.TouchPoint.Evt != KeyboardEvent.None) {
+
+                        lock (this.lockObj) {
+                            this.TouchPoint.Evt = KeyboardEvent.None;
+                        }
+
+                        this.HandleKeys(this.TouchPoint);
+
+                        this.doRefresh = true;
                     }
 
-                    this.HandleKeys(this.TouchPoint);
+                    if (this.doRefresh && this.show) {
+                        this.canvas.Clear(SKColors.Black);
+                        this.DrawInputTextBox(this.initialText);
+                        this.canvas.DrawBitmap(this.active.Image, this.offsetX, this.offsetY);
 
-                    this.doRefresh = true;
+                        this.data565 = this.bitmap.Copy(SKColorType.Rgb565).Bytes;
+
+                        this.doRefresh = false;
+
+                        if (this.displayController != null && this.data565 != null)
+                            this.displayController.Flush(this.data565, 0, this.data565.Length, 0, 0, this.bitmap.Width, this.bitmap.Height, this.bitmap.Width);
+                    }
                 }
+                catch {
 
-                if (this.doRefresh) {
-                    this.canvas.Clear(SKColors.Black);
-                    this.DrawInputTextBox(this.initialText);
-                    this.canvas.DrawBitmap(this.active.Image, this.offsetX, this.offsetY);
-
-                    this.data565 = this.bitmap.Copy(SKColorType.Rgb565).Bytes;
-
-                    this.doRefresh = false;
-
-                    if (this.displayController != null && this.data565 != null)
-                        this.displayController.Flush(this.data565, 0, this.data565.Length, 0, 0, this.bitmap.Width, this.bitmap.Height, this.bitmap.Width);
                 }
 
                 Thread.Sleep(50);
             }
+
+            this.OnClose?.Invoke();
 
         }
 
@@ -305,8 +317,13 @@ namespace GHIElectronics.Endpoint.Drivers.VirtualKeyboard {
         private void Close() {
             this.Text = this.initialText;
             this.show = false;
+            
 
         }
+
+        public delegate void OnCloseEventHandler();
+        public event OnCloseEventHandler OnClose;
+
 
         private void Cancel() {
             this.show = false; ;
@@ -314,6 +331,7 @@ namespace GHIElectronics.Endpoint.Drivers.VirtualKeyboard {
         }
 
         private void HandleKeys(TouchPoint e) {
+
             var x = (int)((e.X - this.offsetX));
             var y = (int)((e.Y - this.offsetY));
 
