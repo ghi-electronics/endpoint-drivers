@@ -38,6 +38,8 @@ namespace GHIElectronics.Endpoint.Drivers.VirtualKeyboard {
         private string initialText = string.Empty;
         public string Text { get; private set; } = string.Empty;
 
+        public void Clear() => this.initialText = string.Empty;
+
         private DisplayController displayController;
 
         private byte[] data565;
