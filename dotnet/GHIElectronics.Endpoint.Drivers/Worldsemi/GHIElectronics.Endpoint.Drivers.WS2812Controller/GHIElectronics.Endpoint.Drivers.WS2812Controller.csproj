@@ -16,7 +16,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="GHIElectronics.Endpoint.Devices.DigitalSignal" Version="0.1.4-beta" />
+    <PackageReference Include="GHIElectronics.Endpoint.Devices.DigitalSignal" Version="0.1.6-beta" />
   </ItemGroup>
   
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

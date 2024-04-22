@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GHIElectronics.Endpoint.Devices.Display" Version="0.1.4-beta" />
+    <PackageReference Include="GHIElectronics.Endpoint.Devices.Display" Version="0.1.6-beta" />
   </ItemGroup>
 
   <ItemGroup>
