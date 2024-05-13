@@ -7,7 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Endpoint-Libraries\Dotnet\GHIElectronics.Endpoint.Libraries\GHIElectronics.Endpoint.Core\GHIElectronics.Endpoint.Core.csproj" />
+    <None Include="..\..\images\icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="GHIElectronics.Endpoint.Core" Version="0.1.7-beta" />
+  </ItemGroup>
+  
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="call ..\..\dopacknuget.bat $(MSBuildProjectName)" />
+  </Target>
 
 </Project>
