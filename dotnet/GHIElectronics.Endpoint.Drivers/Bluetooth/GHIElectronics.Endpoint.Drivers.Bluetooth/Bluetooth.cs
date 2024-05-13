@@ -173,13 +173,13 @@ namespace GHIElectronics.Endpoint.Drivers.Bluetooth {
 
             t.Start();
 
-            while (!script2.Waiting) {
+            while (!script2.Busy) {
                 Thread.Sleep(10);
             }
 
             var expire = DateTime.Now.Add(timeout);
 
-            while (DateTime.Now < expire && script2.Waiting) {
+            while (DateTime.Now < expire && script2.Busy) {
                 Thread.Sleep(100);
             }
 
