@@ -24,7 +24,7 @@ namespace GHIElectronics.Endpoint.Drivers.Bluetooth {
 
             Thread.Sleep(100);
 
-            var script2 = new Script("run_bluetooth.sh", "./", "start");
+            var script2 = new Script("bt_bluetoothd.sh", "./", "start");
 
             script2.Start();
 
