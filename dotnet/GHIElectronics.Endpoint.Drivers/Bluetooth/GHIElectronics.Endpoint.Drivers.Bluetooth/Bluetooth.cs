@@ -62,7 +62,7 @@ namespace GHIElectronics.Endpoint.Drivers.Bluetooth {
                         macAddress = line.Substring(13, 17);
                     }
                     if (line.Contains("Name")) {
-                        devName = line.Substring(7, line.Length - 7 - 1);
+                        devName = line.Substring(8, line.Length - 8-1);
                     }
                     if (line.Contains("Manufacturer")) {
                         devManufacturer = line.Substring(15, line.Length - 15);
