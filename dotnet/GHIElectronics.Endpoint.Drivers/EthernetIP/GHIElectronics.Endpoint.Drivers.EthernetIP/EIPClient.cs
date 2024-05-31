@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
@@ -174,42 +174,42 @@ namespace GHIElectronics.Endpoint.Drivers.EthernetIP
         /// List and identify potential targets. This command shall be sent as braodcast massage using UDP.
         /// </summary>
         /// <returns>List<Encapsulation.CIPIdentityItem> contains the received informations from all devices </returns>	
-        public List<Encapsulation.CIPIdentityItem> ListIdentity()
-        {
+        //public List<Encapsulation.CIPIdentityItem> ListIdentity()
+        //{
             
-            foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
-            {
-                if (ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
-                {
+        //    foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
+        //    {
+        //        if (ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
+        //        {
 
-                    foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
-                    {
-                        if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                        {
-                            System.Net.IPAddress mask = ip.IPv4Mask;
-                            System.Net.IPAddress address = ip.Address;
+        //            foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
+        //            {
+        //                if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+        //                {
+        //                    System.Net.IPAddress mask = ip.IPv4Mask;
+        //                    System.Net.IPAddress address = ip.Address;
 
-                            String multicastAddress = (address.GetAddressBytes()[0] | (~(mask.GetAddressBytes()[0])) & 0xFF).ToString() + "." + (address.GetAddressBytes()[1] | (~(mask.GetAddressBytes()[1])) & 0xFF).ToString() + "." + (address.GetAddressBytes()[2] | (~(mask.GetAddressBytes()[2])) & 0xFF).ToString() + "." + (address.GetAddressBytes()[3] | (~(mask.GetAddressBytes()[3])) & 0xFF).ToString();
+        //                    String multicastAddress = (address.GetAddressBytes()[0] | (~(mask.GetAddressBytes()[0])) & 0xFF).ToString() + "." + (address.GetAddressBytes()[1] | (~(mask.GetAddressBytes()[1])) & 0xFF).ToString() + "." + (address.GetAddressBytes()[2] | (~(mask.GetAddressBytes()[2])) & 0xFF).ToString() + "." + (address.GetAddressBytes()[3] | (~(mask.GetAddressBytes()[3])) & 0xFF).ToString();
 
-                            byte[] sendData = new byte[24];
-                            sendData[0] = 0x63;               //Command for "ListIdentity"
-                            System.Net.Sockets.UdpClient udpClient = new System.Net.Sockets.UdpClient();
-                            System.Net.IPEndPoint endPoint = new System.Net.IPEndPoint(System.Net.IPAddress.Parse(multicastAddress), 44818);
-                            udpClient.Send(sendData, sendData.Length, endPoint);
+        //                    byte[] sendData = new byte[24];
+        //                    sendData[0] = 0x63;               //Command for "ListIdentity"
+        //                    System.Net.Sockets.UdpClient udpClient = new System.Net.Sockets.UdpClient();
+        //                    System.Net.IPEndPoint endPoint = new System.Net.IPEndPoint(System.Net.IPAddress.Parse(multicastAddress), 44818);
+        //                    udpClient.Send(sendData, sendData.Length, endPoint);
 
-                            UdpState s = new UdpState();
-                            s.e = endPoint;
-                            s.u = udpClient;
+        //                    UdpState s = new UdpState();
+        //                    s.e = endPoint;
+        //                    s.u = udpClient;
 
-                            var asyncResult = udpClient.BeginReceive(new AsyncCallback(ReceiveCallback), s);
+        //                    var asyncResult = udpClient.BeginReceive(new AsyncCallback(ReceiveCallback), s);
 
-                            System.Threading.Thread.Sleep(1000);
-                        }
-                    }
-                }
-            }
-            return returnList;
-        }
+        //                    System.Threading.Thread.Sleep(1000);
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return returnList;
+        //}
 
         /// <summary>
         /// Sends a RegisterSession command to a target to initiate session
