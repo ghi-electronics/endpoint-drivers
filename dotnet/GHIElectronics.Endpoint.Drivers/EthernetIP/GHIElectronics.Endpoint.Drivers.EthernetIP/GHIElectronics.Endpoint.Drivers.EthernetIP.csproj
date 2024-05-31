@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<EnableDefaultItems>false</EnableDefaultItems>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <Compile Include="CIP.cs" />
+    <Compile Include="EIPClient.cs" />
+    <Compile Include="Encapsulation.cs" />
+    <Compile Include="ObjectLibrary\TcpIpInterfaceObject.cs" />
+    <Compile Include="ObjectLibrary\AssemblyObject.cs" />
+    <Compile Include="ObjectLibrary\ConnectionManagerObject.cs" />
+    <Compile Include="ObjectLibrary\IdentityObject.cs" />
+    <Compile Include="ObjectLibrary\MessageRouterObject.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="..\..\images\icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="GHIElectronics.Endpoint.Core" Version="0.1.7-beta" />
+  </ItemGroup>
+  
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="call ..\..\dopacknuget.bat $(MSBuildProjectName)" />
+  </Target>
+
+</Project>

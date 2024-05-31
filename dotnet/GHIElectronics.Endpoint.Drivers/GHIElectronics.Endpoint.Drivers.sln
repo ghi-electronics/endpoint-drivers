@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Dri
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Drivers.VirtualKeyboard", "VirtualKeyboard\GHIElectronics.Endpoint.Drivers.VirtualKeyboard\GHIElectronics.Endpoint.Drivers.VirtualKeyboard.csproj", "{065ED0F3-543C-4010-AEAA-FD08EDB1D8CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GHIElectronics.Endpoint.Drivers.Bluetooth", "Bluetooth\GHIElectronics.Endpoint.Drivers.Bluetooth\GHIElectronics.Endpoint.Drivers.Bluetooth.csproj", "{7D56EBC1-EE0D-494A-9079-9591DA51F8B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Drivers.Bluetooth", "Bluetooth\GHIElectronics.Endpoint.Drivers.Bluetooth\GHIElectronics.Endpoint.Drivers.Bluetooth.csproj", "{7D56EBC1-EE0D-494A-9079-9591DA51F8B8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Drivers.EthernetIP", "EthernetIP\GHIElectronics.Endpoint.Drivers.EthernetIP\GHIElectronics.Endpoint.Drivers.EthernetIP.csproj", "{15474A38-C076-4B6E-8E42-BE51D8841DE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{7D56EBC1-EE0D-494A-9079-9591DA51F8B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D56EBC1-EE0D-494A-9079-9591DA51F8B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D56EBC1-EE0D-494A-9079-9591DA51F8B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15474A38-C076-4B6E-8E42-BE51D8841DE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15474A38-C076-4B6E-8E42-BE51D8841DE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15474A38-C076-4B6E-8E42-BE51D8841DE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15474A38-C076-4B6E-8E42-BE51D8841DE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
