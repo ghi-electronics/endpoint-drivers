@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GHIElectronics.Endpoint.Drivers.EthernetIP
 {
-    public class EEIPClient
+    public class EthernetIPClient
     {
         TcpClient client;
         NetworkStream stream;
@@ -129,11 +129,9 @@ namespace GHIElectronics.Endpoint.Drivers.EthernetIP
         /// </summary>        
         public DateTime LastReceivedImplicitMessage { get; set; }
     
-        public EEIPClient()
+        public EthernetIPClient()
         {
-            Console.WriteLine("EEIP Library Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString());
-            Console.WriteLine("Copyright (c) Stefan Rossmann Engineering Solutions");
-            Console.WriteLine();
+            
         }
 
         private void ReceiveCallback(IAsyncResult ar)
@@ -899,7 +897,7 @@ namespace GHIElectronics.Endpoint.Drivers.EthernetIP
                     {
                         T_O_IOData[i] = receiveBytes[20 + i + headerOffset];
                     }
-                    //Console.WriteLine(T_O_IOData[0]);
+                    
 
 
                 }
