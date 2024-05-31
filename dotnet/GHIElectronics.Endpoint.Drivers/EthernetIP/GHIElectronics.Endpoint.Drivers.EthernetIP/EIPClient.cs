@@ -195,8 +195,6 @@ namespace GHIElectronics.Endpoint.Drivers.EthernetIP
                             sendData[0] = 0x63;               //Command for "ListIdentity"
                             System.Net.Sockets.UdpClient udpClient = new System.Net.Sockets.UdpClient();
                             System.Net.IPEndPoint endPoint = new System.Net.IPEndPoint(System.Net.IPAddress.Parse(multicastAddress), 44818);
-
-                            //System.Net.IPEndPoint endPoint = new System.Net.IPEndPoint(System.Net.IPAddress.Parse("192.168.86.61"), 44818);
                             udpClient.Send(sendData, sendData.Length, endPoint);
 
                             UdpState s = new UdpState();
