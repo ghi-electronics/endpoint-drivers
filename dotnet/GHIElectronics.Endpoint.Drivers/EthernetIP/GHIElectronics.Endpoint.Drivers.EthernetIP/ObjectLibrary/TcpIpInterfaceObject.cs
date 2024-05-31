@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,12 +8,12 @@ namespace GHIElectronics.Endpoint.Drivers.EthernetIP.ObjectLibrary
 {
     public class TcpIpInterfaceObject
     {
-        public EEIPClient eeipClient;
+        public EthernetIPClient eeipClient;
 
         /// <summary>
         /// Constructor. </summary>
-        /// <param name="eeipClient"> EEIPClient Object</param>
-        public TcpIpInterfaceObject(EEIPClient eeipClient)
+        /// <param name="eeipClient"> EthernetIPClient Object</param>
+        public TcpIpInterfaceObject(EthernetIPClient eeipClient)
         {
             this.eeipClient = eeipClient;
         }

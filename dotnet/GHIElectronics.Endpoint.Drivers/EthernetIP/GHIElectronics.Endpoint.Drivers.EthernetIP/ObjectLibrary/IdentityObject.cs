@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,12 +15,12 @@ namespace GHIElectronics.Endpoint.Drivers.EthernetIP.ObjectLibrary
     /// </remarks>
     public class IdentityObject
     {
-        public EEIPClient eeipClient;
+        public EthernetIPClient eeipClient;
 
         /// <summary>
         /// Constructor. </summary>
-        /// <param name="eeipClient"> EEIPClient Object</param>
-        public IdentityObject(EEIPClient eeipClient)
+        /// <param name="eeipClient"> EthernetIPClient Object</param>
+        public IdentityObject(EthernetIPClient eeipClient)
         {
             this.eeipClient = eeipClient;
         }

@@ -477,7 +477,7 @@ namespace GHIElectronics.Endpoint.Drivers.EthernetIP
                 commonPacketFormat.SocketaddrInfo_O_T.SIN_family = 2;
             if (O_T_ConnectionType == ConnectionType.Multicast)
             {
-                UInt32 multicastResponseAddress = EEIPClient.GetMulticastAddress(BitConverter.ToUInt32(System.Net.IPAddress.Parse(IPAddress).GetAddressBytes(), 0));
+                UInt32 multicastResponseAddress = EthernetIPClient.GetMulticastAddress(BitConverter.ToUInt32(System.Net.IPAddress.Parse(IPAddress).GetAddressBytes(), 0));
 
                 commonPacketFormat.SocketaddrInfo_O_T.SIN_Address = (multicastResponseAddress);
 
