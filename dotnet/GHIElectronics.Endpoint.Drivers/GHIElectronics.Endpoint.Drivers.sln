@@ -1,23 +1,17 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Drivers.FocalTech.FT5xx6", "FocalTech\GHIElectronics.Endpoint.Drivers.FocalTech.FT5xx6\GHIElectronics.Endpoint.Drivers.FocalTech.FT5xx6.csproj", "{0800CBB7-317D-40A9-A083-1EBC81C1E630}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Drivers.WS2812Controller", "Worldsemi\GHIElectronics.Endpoint.Drivers.WS2812Controller\GHIElectronics.Endpoint.Drivers.WS2812Controller.csproj", "{1BACB6B5-20A9-4679-974C-DD017EF71722}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Drivers.Omnivision.OV5640", "Omnivision\GHIElectronics.Endpoint.Drivers.Omnivision.OV5640\GHIElectronics.Endpoint.Drivers.Omnivision.OV5640.csproj", "{B00222FF-6D52-47B7-87A7-1732552AA906}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Drivers.Avalonia.Input", "Avalonia\GHIElectronics.Endpoint.Drivers.Avalonia.Input\GHIElectronics.Endpoint.Drivers.Avalonia.Input.csproj", "{722D2551-B503-4662-A614-A6167480E89C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Drivers.Sitronix.ST7735", "Sitronix\GHIElectronics.Endpoint.Drivers.Sitronix.ST7735\GHIElectronics.Endpoint.Drivers.Sitronix.ST7735.csproj", "{C098A727-3ACB-4C75-91FA-84BB44FDB8D7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Drivers.VirtualKeyboard", "VirtualKeyboard\GHIElectronics.Endpoint.Drivers.VirtualKeyboard\GHIElectronics.Endpoint.Drivers.VirtualKeyboard.csproj", "{065ED0F3-543C-4010-AEAA-FD08EDB1D8CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Drivers.HiLetgo.ILI9341", "HiLetgo\GHIElectronics.Endpoint.Drivers.HiLetgo.ILI9341\GHIElectronics.Endpoint.Drivers.HiLetgo.ILI9341.csproj", "{D4E5F7A1-5B9C-4D2E-8F6A-1234567890AB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Drivers.Bluetooth", "Bluetooth\GHIElectronics.Endpoint.Drivers.Bluetooth\GHIElectronics.Endpoint.Drivers.Bluetooth.csproj", "{7D56EBC1-EE0D-494A-9079-9591DA51F8B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Drivers.SolomonSystech.SSD1306", "SolomonSystech\GHIElectronics.Endpoint.Drivers.SolomonSystech.SSD1306\GHIElectronics.Endpoint.Drivers.SolomonSystech.SSD1306.csproj", "{E6A1B2C3-6D7E-4F8A-9B0C-2345678901BC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Drivers.EthernetIP", "EthernetIP\GHIElectronics.Endpoint.Drivers.EthernetIP\GHIElectronics.Endpoint.Drivers.EthernetIP.csproj", "{15474A38-C076-4B6E-8E42-BE51D8841DE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Drivers.SinoWealth.SH110x", "SinoWealth\GHIElectronics.Endpoint.Drivers.SinoWealth.SH110x\GHIElectronics.Endpoint.Drivers.SinoWealth.SH110x.csproj", "{F7B2C3D4-7E8F-4A9B-AC1D-3456789012CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,34 +23,22 @@ Global
 		{0800CBB7-317D-40A9-A083-1EBC81C1E630}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0800CBB7-317D-40A9-A083-1EBC81C1E630}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0800CBB7-317D-40A9-A083-1EBC81C1E630}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1BACB6B5-20A9-4679-974C-DD017EF71722}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1BACB6B5-20A9-4679-974C-DD017EF71722}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1BACB6B5-20A9-4679-974C-DD017EF71722}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1BACB6B5-20A9-4679-974C-DD017EF71722}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B00222FF-6D52-47B7-87A7-1732552AA906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B00222FF-6D52-47B7-87A7-1732552AA906}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B00222FF-6D52-47B7-87A7-1732552AA906}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B00222FF-6D52-47B7-87A7-1732552AA906}.Release|Any CPU.Build.0 = Release|Any CPU
-		{722D2551-B503-4662-A614-A6167480E89C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{722D2551-B503-4662-A614-A6167480E89C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{722D2551-B503-4662-A614-A6167480E89C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{722D2551-B503-4662-A614-A6167480E89C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C098A727-3ACB-4C75-91FA-84BB44FDB8D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C098A727-3ACB-4C75-91FA-84BB44FDB8D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C098A727-3ACB-4C75-91FA-84BB44FDB8D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C098A727-3ACB-4C75-91FA-84BB44FDB8D7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{065ED0F3-543C-4010-AEAA-FD08EDB1D8CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{065ED0F3-543C-4010-AEAA-FD08EDB1D8CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{065ED0F3-543C-4010-AEAA-FD08EDB1D8CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{065ED0F3-543C-4010-AEAA-FD08EDB1D8CC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7D56EBC1-EE0D-494A-9079-9591DA51F8B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D56EBC1-EE0D-494A-9079-9591DA51F8B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D56EBC1-EE0D-494A-9079-9591DA51F8B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D56EBC1-EE0D-494A-9079-9591DA51F8B8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{15474A38-C076-4B6E-8E42-BE51D8841DE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{15474A38-C076-4B6E-8E42-BE51D8841DE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{15474A38-C076-4B6E-8E42-BE51D8841DE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{15474A38-C076-4B6E-8E42-BE51D8841DE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4E5F7A1-5B9C-4D2E-8F6A-1234567890AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4E5F7A1-5B9C-4D2E-8F6A-1234567890AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4E5F7A1-5B9C-4D2E-8F6A-1234567890AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4E5F7A1-5B9C-4D2E-8F6A-1234567890AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6A1B2C3-6D7E-4F8A-9B0C-2345678901BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6A1B2C3-6D7E-4F8A-9B0C-2345678901BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6A1B2C3-6D7E-4F8A-9B0C-2345678901BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6A1B2C3-6D7E-4F8A-9B0C-2345678901BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7B2C3D4-7E8F-4A9B-AC1D-3456789012CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7B2C3D4-7E8F-4A9B-AC1D-3456789012CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7B2C3D4-7E8F-4A9B-AC1D-3456789012CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7B2C3D4-7E8F-4A9B-AC1D-3456789012CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

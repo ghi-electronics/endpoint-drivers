@@ -1,16 +1,38 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net11.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <Title>Endpoint</Title>
+    <PackageId>GHIElectronics.Endpoint.Drivers.Sitronix.ST7735</PackageId>
+    <Description>The Sitronix ST7735 SPI display driver for Endpoint.</Description>
+    <Copyright>Copyright GHI Electronics, LLC 2026</Copyright>
+    <PackageProjectUrl>https://ghielectronics.com/</PackageProjectUrl>
+    <PackageTags>Endpoint</PackageTags>
+    <AssemblyVersion>0.4.0</AssemblyVersion>
+    <FileVersion>0.4.0</FileVersion>
+    <Version>0.4.0</Version>
+    <Authors>GHI Electronics, LLC</Authors>
+    <Owners>GHI Electronics, LLC</Owners>
+    <Company>GHI Electronics, LLC</Company>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GHIElectronics.Endpoint.Core" Version="0.1.7-beta" />
-    <PackageReference Include="GHIElectronics.Endpoint.Devices.Display" Version="0.1.7-beta" />
+    <None Include="..\..\images\icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
-  
+
+  <ItemGroup>
+    <PackageReference Include="GHIElectronics.Endpoint.Core" Version="0.4.0" />
+    <PackageReference Include="GHIElectronics.Endpoint.Devices.Display" Version="0.4.0" />
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="call ..\..\dopacknuget.bat $(MSBuildProjectName)" />
   </Target>
