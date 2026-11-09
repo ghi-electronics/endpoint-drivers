@@ -31,7 +31,7 @@ namespace GHIElectronics.Endpoint.Drivers.Omnivision.OV5640 {
             }
 
             this.i2cController = i2cController; 
-            EPM815.I2c.Initialize(i2cController);
+            I2cController.Initialize(i2cController);
 
             if (resetPin != Gpio.Pin.NONE) {
                 this.resetPin = resetPin;
