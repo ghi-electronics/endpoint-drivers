@@ -67,6 +67,19 @@ namespace GHIElectronics.Endpoint.Drivers.HiLetgo.ILI9341 {
         private bool rowColumnSwapped;
         private bool isEnabled;
 
+        // Staging buffer for the per-frame byte re-encode in Flush. Allocated
+        // lazily on the first Flush, reused thereafter.
+        private byte[] swapBuffer = System.Array.Empty<byte>();
+
+        /// <summary>
+        /// Swap R and B channels before pushing pixels. Some HiLetgo / ebay
+        /// ILI9341 modules have the physical colour filter wired as BGR
+        /// regardless of the chip's MADCTL BGR bit, so colours look swapped
+        /// (yellow renders as cyan, red as blue). Flip this on for those
+        /// modules; leave off for a "normal" RGB-filter panel. Default off.
+        /// </summary>
+        public bool SwapRedBlue { get; set; }
+
         public override int Width  => this.rowColumnSwapped ? 320 : 240;
         public override int Height => this.rowColumnSwapped ? 240 : 320;
         public override bool IsEnabled => this.isEnabled;
@@ -125,10 +138,35 @@ namespace GHIElectronics.Endpoint.Drivers.HiLetgo.ILI9341 {
             if (format != PixelFormat.Format16bppRgb565) {
                 throw new NotSupportedException("ILI9341Controller only supports Format16bppRgb565 today.");
             }
+            // Canvas writes RGB565 little-endian (for /dev/fb0); ILI9341 reads
+            // 16bpp big-endian over SPI, so we always byte-swap into a staging
+            // buffer. SwapRedBlue additionally swaps R and B channels for
+            // modules whose physical colour filter is wired as BGR.
+            if (this.swapBuffer.Length < pixels.Length) {
+                this.swapBuffer = new byte[pixels.Length];
+            }
+            var dst = this.swapBuffer.AsSpan(0, pixels.Length);
+            if (this.SwapRedBlue) {
+                for (int i = 0; i + 1 < pixels.Length; i += 2) {
+                    byte lo = pixels[i];       // bits [7:5]=G[2:0], [4:0]=B
+                    byte hi = pixels[i + 1];   // bits [7:3]=R,      [2:0]=G[5:3]
+                    int r = hi >> 3;
+                    int g = ((hi & 0x07) << 3) | (lo >> 5);
+                    int b = lo & 0x1F;
+                    dst[i]     = (byte)((b << 3) | (g >> 3));           // BGR big-endian high byte
+                    dst[i + 1] = (byte)(((g & 0x07) << 5) | r);         // BGR big-endian low byte
+                }
+            }
+            else {
+                for (int i = 0; i + 1 < pixels.Length; i += 2) {
+                    dst[i]     = pixels[i + 1];
+                    dst[i + 1] = pixels[i];
+                }
+            }
             this.SetDrawWindow(x, y, x + width - 1, y + height - 1);
             this.SendCommand(ILI9341CommandId.RAMWR);
             this.gpio.Write(this.dataControlPin, PinValue.High);
-            this.SpiWrite(pixels);
+            this.SpiWrite(dst);
         }
 
         public override void Dispose() {
@@ -154,7 +192,9 @@ namespace GHIElectronics.Endpoint.Drivers.HiLetgo.ILI9341 {
             this.SendCommand(ILI9341CommandId.DISPOFF);
 
             this.SendCommand(ILI9341CommandId.MADCTL);
-            this.SendData(0x08 | 0x40);
+            // MX only (0x40): portrait 240x320, RGB filter. Panels wired as
+            // BGR physically are handled via SwapRedBlue in Flush, not here.
+            this.SendData(0x40);
 
             this.SendCommand(ILI9341CommandId.PIXFMT);
             this.SendData(0x55);                     // 16 bpp / 565
