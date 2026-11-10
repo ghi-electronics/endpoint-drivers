@@ -171,37 +171,65 @@ namespace GHIElectronics.Endpoint.Drivers.SinoWealth.SH110x {
         }
 
         /// <summary>
-        /// Flush a region of the panel. Source must be
-        /// <see cref="PixelFormat.Format16bppRgb565"/>; any non-zero source
-        /// pixel lights the corresponding OLED cell. The dirty region is
-        /// written into VRAM and then only changed pages are pushed over I2C
-        /// (unless <see cref="SkipUnchangedPages"/> is false).
+        /// Flush a region of the panel. Source is either
+        /// <see cref="PixelFormat.Format16bppRgb565"/> (any non-zero pixel
+        /// lights the cell) or <c>PixelFormat.Format1bppIndexed</c> alias
+        /// via <see cref="System.Drawing.Imaging.PixelFormat.Format1bppIndexed"/>
+        /// (one bit per pixel, MSB-first row-major, matches
+        /// <c>Canvas.PixelFormat.Monochrome</c>). The dirty region is written
+        /// into VRAM and then only changed pages are pushed over I2C (unless
+        /// <see cref="SkipUnchangedPages"/> is false).
         /// </summary>
         public override void Flush(ReadOnlySpan<byte> pixels, PixelFormat format,
                                    int x, int y, int width, int height) {
-            if (format != PixelFormat.Format16bppRgb565) {
-                throw new NotSupportedException("SH110xController only supports Format16bppRgb565 today.");
-            }
             if (x < 0 || y < 0 || width <= 0 || height <= 0
                 || x + width > this.width || y + height > this.height) {
                 throw new ArgumentException("Flush region outside the panel");
             }
-            if (pixels.Length < width * height * 2) {
-                throw new ArgumentException("Pixel buffer is smaller than the region");
-            }
 
-            for (int row = 0; row < height; row++) {
-                int panelY = y + row;
-                int page = panelY >> 3;
-                byte mask = (byte)(1 << (panelY & 7));
-                int srcRow = row * width * 2;
-                for (int col = 0; col < width; col++) {
-                    int srcIndex = srcRow + col * 2;
-                    ushort px = (ushort)(pixels[srcIndex] | (pixels[srcIndex + 1] << 8));
-                    int vIndex = page * this.width + (x + col);
-                    if (px != 0) this.vram[vIndex] |= mask;
-                    else         this.vram[vIndex] = (byte)(this.vram[vIndex] & ~mask);
+            if (format == PixelFormat.Format16bppRgb565) {
+                if (pixels.Length < width * height * 2) {
+                    throw new ArgumentException("Pixel buffer is smaller than the region");
                 }
+                for (int row = 0; row < height; row++) {
+                    int panelY = y + row;
+                    int page = panelY >> 3;
+                    byte mask = (byte)(1 << (panelY & 7));
+                    int srcRow = row * width * 2;
+                    for (int col = 0; col < width; col++) {
+                        int srcIndex = srcRow + col * 2;
+                        ushort px = (ushort)(pixels[srcIndex] | (pixels[srcIndex + 1] << 8));
+                        int vIndex = page * this.width + (x + col);
+                        if (px != 0) this.vram[vIndex] |= mask;
+                        else         this.vram[vIndex] = (byte)(this.vram[vIndex] & ~mask);
+                    }
+                }
+            }
+            else if (format == PixelFormat.Format1bppIndexed) {
+                // Canvas.PixelFormat.Monochrome: 1 bit per pixel, MSB-first,
+                // row stride = (width + 7) / 8 bytes. Same layout the OLED
+                // itself stores, just a different page/column arrangement.
+                int srcStride = (width + 7) / 8;
+                if (pixels.Length < srcStride * height) {
+                    throw new ArgumentException("Pixel buffer is smaller than the region");
+                }
+                for (int row = 0; row < height; row++) {
+                    int panelY = y + row;
+                    int page = panelY >> 3;
+                    byte mask = (byte)(1 << (panelY & 7));
+                    int srcRow = row * srcStride;
+                    for (int col = 0; col < width; col++) {
+                        int srcByte = pixels[srcRow + (col >> 3)];
+                        bool lit = (srcByte & (1 << (7 - (col & 7)))) != 0;
+                        int vIndex = page * this.width + (x + col);
+                        if (lit) this.vram[vIndex] |= mask;
+                        else     this.vram[vIndex] = (byte)(this.vram[vIndex] & ~mask);
+                    }
+                }
+            }
+            else {
+                throw new NotSupportedException(
+                    "SH110xController accepts Format16bppRgb565 or Format1bppIndexed (Canvas Monochrome).");
             }
 
             this.FlushVram();
