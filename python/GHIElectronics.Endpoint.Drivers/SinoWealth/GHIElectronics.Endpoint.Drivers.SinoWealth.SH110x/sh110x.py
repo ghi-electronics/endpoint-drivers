@@ -7,7 +7,7 @@ Usage:
 
     from GHIElectronics.Endpoint.Core import EPDomino24, I2cController
     from GHIElectronics.Endpoint.Devices.I2c import I2cDevice, I2cConnectionSettings
-    from GHIElectronics.Endpoint.UI.Drawing import Canvas, Color, PixelFormat
+    from GHIElectronics.Endpoint.Drawing import Canvas, Color, PixelFormat
     from sh110x import Sh110xController, Sh110xChip
 
     I2cController.Initialize(EPDomino24.I2c.I2c6)
@@ -32,7 +32,7 @@ Differences from SSD1306 that this driver handles:
 from enum import IntEnum
 
 from GHIElectronics.Endpoint.Devices.I2c import I2cConnectionSettings
-from GHIElectronics.Endpoint.UI.Drawing import PixelFormat
+from GHIElectronics.Endpoint.Drawing import PixelFormat
 
 
 class Sh110xChip(IntEnum):
@@ -146,7 +146,7 @@ class Sh110xController:
 
     def flush(self, pixels, pixel_format, x=0, y=0, width=None, height=None):
         """Push a region of the panel. `pixel_format` is a
-        GHIElectronics.Endpoint.UI.Drawing.PixelFormat value (Rgb565 or
+        GHIElectronics.Endpoint.Drawing.PixelFormat value (Rgb565 or
         Monochrome)."""
         if width is None: width = self.width
         if height is None: height = self.height

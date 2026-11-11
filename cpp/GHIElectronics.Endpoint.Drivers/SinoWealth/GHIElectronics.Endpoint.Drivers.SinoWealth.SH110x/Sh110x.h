@@ -11,7 +11,7 @@
 //
 //     namespace Core    = GHIElectronics::Endpoint::Core;
 //     namespace I2cNs   = GHIElectronics::Endpoint::Devices::I2c;
-//     namespace Drawing = GHIElectronics::Endpoint::UI::Drawing;
+//     namespace Drawing = GHIElectronics::Endpoint::Drawing;
 //
 //     Core::I2cController::Initialize(Core::EPDomino24::I2c::I2c6);
 //     auto i2c = I2cNs::I2cDevice::Create(
@@ -105,7 +105,7 @@ public:
 
     // Full-screen Flush with pixel format (Rgb565 or Monochrome).
     void Flush(std::span<const uint8_t> pixels,
-               GHIElectronics::Endpoint::UI::Drawing::PixelFormat format) {
+               GHIElectronics::Endpoint::Drawing::PixelFormat format) {
         Flush(pixels, format, 0, 0, width_, height_);
     }
 
@@ -113,9 +113,9 @@ public:
     // `pixels`. Rgb565 input: any non-black pixel lights the cell. Monochrome
     // input: 1 bpp MSB-first, matches Canvas.PixelFormat.Monochrome.
     void Flush(std::span<const uint8_t> pixels,
-               GHIElectronics::Endpoint::UI::Drawing::PixelFormat format,
+               GHIElectronics::Endpoint::Drawing::PixelFormat format,
                int x, int y, int width, int height) {
-        using GHIElectronics::Endpoint::UI::Drawing::PixelFormat;
+        using GHIElectronics::Endpoint::Drawing::PixelFormat;
         if (x < 0 || y < 0 || width <= 0 || height <= 0
             || x + width > width_ || y + height > height_) {
             throw GHIElectronics::Endpoint::Core::ArgumentException(
