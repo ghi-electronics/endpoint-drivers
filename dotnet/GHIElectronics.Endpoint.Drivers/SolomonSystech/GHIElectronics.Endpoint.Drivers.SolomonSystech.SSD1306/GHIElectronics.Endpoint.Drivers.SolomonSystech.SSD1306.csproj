@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net11.0</TargetFramework>
@@ -12,9 +12,9 @@
     <Copyright>Copyright GHI Electronics, LLC 2026</Copyright>
     <PackageProjectUrl>https://ghielectronics.com/</PackageProjectUrl>
     <PackageTags>Endpoint</PackageTags>
-    <AssemblyVersion>0.5.0</AssemblyVersion>
-    <FileVersion>0.5.0</FileVersion>
-    <Version>0.5.0</Version>
+    <AssemblyVersion>0.5.2</AssemblyVersion>
+    <FileVersion>0.5.2</FileVersion>
+    <Version>0.5.2-preview</Version>
     <Authors>GHI Electronics, LLC</Authors>
     <Owners>GHI Electronics, LLC</Owners>
     <Company>GHI Electronics, LLC</Company>
@@ -29,8 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GHIElectronics.Endpoint.Core" Version="0.5.0" />
-    <PackageReference Include="GHIElectronics.Endpoint.Devices.Display" Version="0.5.0" />
+    <PackageReference Include="GHIElectronics.Endpoint.Core" Version="0.5.2-preview" />
+    <PackageReference Include="GHIElectronics.Endpoint.Devices.Display" Version="0.5.2-preview" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

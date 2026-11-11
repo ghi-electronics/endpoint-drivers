@@ -1,4 +1,4 @@
-"""HiLetgo ILI9341 240x320 SPI TFT driver for GHI Endpoint (Python).
+﻿"""HiLetgo ILI9341 240x320 SPI TFT driver for GHI Endpoint (Python).
 
 Companion to GHIElectronics.Endpoint.Drivers.HiLetgo.ILI9341 (.NET).
 Drop this file into a project; the caller passes in an already-opened
@@ -22,7 +22,7 @@ Usage:
     from GHIElectronics.Endpoint.Devices.Spi import (
         SpiDevice, SpiConnectionSettings, SpiMode)
     from GHIElectronics.Endpoint.Devices.Gpio import GpioController
-    from ili9341 import Ili9341
+    from GHIElectronics.Endpoint.Drivers.HiLetgo.ILI9341 import Ili9341
 
     SpiController.Initialize(EPDomino24.Spi.Spi1, bufferSize=4096)
     settings = SpiConnectionSettings(EPDomino24.Spi.Spi1)

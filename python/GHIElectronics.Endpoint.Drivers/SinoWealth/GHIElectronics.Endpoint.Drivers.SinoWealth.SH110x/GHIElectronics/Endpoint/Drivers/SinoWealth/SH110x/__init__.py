@@ -1,4 +1,4 @@
-"""SinoWealth SH1106 / SH1107 I2C 1bpp OLED driver for GHI Endpoint (Python).
+﻿"""SinoWealth SH1106 / SH1107 I2C 1bpp OLED driver for GHI Endpoint (Python).
 
 Companion to GHIElectronics.Endpoint.Drivers.SinoWealth.SH110x (.NET).
 Caller passes an already-opened I2cDevice.
@@ -8,7 +8,7 @@ Usage:
     from GHIElectronics.Endpoint.Core import EPDomino24, I2cController
     from GHIElectronics.Endpoint.Devices.I2c import I2cDevice, I2cConnectionSettings
     from GHIElectronics.Endpoint.Drawing import Canvas, Color, PixelFormat
-    from sh110x import Sh110xController, Sh110xChip
+    from GHIElectronics.Endpoint.Drivers.SinoWealth.SH110x import Sh110xController, Sh110xChip
 
     I2cController.Initialize(EPDomino24.I2c.I2c6)
     i2c = I2cDevice.Create(Sh110xController.get_connection_settings(EPDomino24.I2c.I2c6))

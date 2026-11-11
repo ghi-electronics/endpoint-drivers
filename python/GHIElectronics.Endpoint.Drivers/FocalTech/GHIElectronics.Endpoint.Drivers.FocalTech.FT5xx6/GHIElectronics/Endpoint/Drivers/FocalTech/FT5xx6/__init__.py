@@ -1,4 +1,4 @@
-"""FocalTech FT5xx6 capacitive-touch driver for GHI Endpoint (Python).
+﻿"""FocalTech FT5xx6 capacitive-touch driver for GHI Endpoint (Python).
 
 Companion to GHIElectronics.Endpoint.Drivers.FocalTech.FT5xx6 (.NET).
 Reusable across any Endpoint board: the caller opens a GpioController
@@ -8,7 +8,7 @@ Usage:
 
     from GHIElectronics.Endpoint.Core import EPDomino24, I2cController
     from GHIElectronics.Endpoint.Devices.Gpio import GpioController
-    from ft5xx6 import Ft5xx6Controller
+    from GHIElectronics.Endpoint.Drivers.FocalTech.FT5xx6 import Ft5xx6Controller
 
     I2cController.Initialize(EPDomino24.I2c.I2c5)
     gpio = GpioController()
