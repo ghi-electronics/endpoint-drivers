@@ -4,15 +4,15 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "GHIElectronics.Endpoint.Drivers.SinoWealth.SH110x"
-version = "0.5.2"
+version = "0.5.3"
 description = "SinoWealth SH1106 / SH1107 I2C 1bpp OLED display driver for Endpoint. Mirrors the .NET driver API."
 authors = [{ name = "GHI Electronics, LLC", email = "support@ghielectronics.com" }]
 license = "MIT"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
-    "GHIElectronics.Endpoint.Core>=0.5.2,<0.6",
-    "GHIElectronics.Endpoint.Devices.I2c>=0.5.2,<0.6",
+    "GHIElectronics.Endpoint.Core>=0.5.3,<0.6",
+    "GHIElectronics.Endpoint.Devices.I2c>=0.5.3,<0.6",
 ]
 classifiers = ["Programming Language :: Python :: 3", "Operating System :: POSIX :: Linux"]
 
