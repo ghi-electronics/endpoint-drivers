@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Dri
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Drivers.SinoWealth.SH110x", "SinoWealth\GHIElectronics.Endpoint.Drivers.SinoWealth.SH110x\GHIElectronics.Endpoint.Drivers.SinoWealth.SH110x.csproj", "{F7B2C3D4-7E8F-4A9B-AC1D-3456789012CD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GHIElectronics.Endpoint.Drivers.RaspberryPi", "RaspberryPi\GHIElectronics.Endpoint.Drivers.RaspberryPi\GHIElectronics.Endpoint.Drivers.RaspberryPi.csproj", "{A8C3D4E5-8F9A-4B1C-BD2E-4567890123DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{F7B2C3D4-7E8F-4A9B-AC1D-3456789012CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7B2C3D4-7E8F-4A9B-AC1D-3456789012CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7B2C3D4-7E8F-4A9B-AC1D-3456789012CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8C3D4E5-8F9A-4B1C-BD2E-4567890123DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8C3D4E5-8F9A-4B1C-BD2E-4567890123DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8C3D4E5-8F9A-4B1C-BD2E-4567890123DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8C3D4E5-8F9A-4B1C-BD2E-4567890123DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
