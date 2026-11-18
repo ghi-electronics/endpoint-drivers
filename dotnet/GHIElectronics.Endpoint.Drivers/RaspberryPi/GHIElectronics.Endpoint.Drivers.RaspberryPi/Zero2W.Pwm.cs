@@ -21,6 +21,8 @@
 // /sys/class/pwm/pwmchipN/pwmN interface; our Initialize is only about
 // muxing the output pin.
 
+using System.Collections.Generic;
+
 namespace GHIElectronics.Endpoint.Drivers.RaspberryPi;
 
 public static partial class Zero2W
@@ -44,16 +46,18 @@ public static partial class Zero2W
 
         private const string KernelModule = "pwm-bcm2835";
 
+        private static readonly Dictionary<int, uint> _saved = new();
+
         public static void Initialize(Channel channel)
         {
-            Pinmux.Save(channel.Pin);
+            _saved[channel.Pin] = Pinmux.Get(channel.Pin);
             Pinmux.Modprobe(KernelModule);
-            Pinmux.Set(channel.Pin, channel.PinFunction);
+            Pinmux.Set(channel.Pin, (uint)channel.PinFunction);
         }
 
         public static void UnInitialize(Channel channel)
         {
-            Pinmux.Restore(channel.Pin);
+            if (_saved.Remove(channel.Pin, out var function)) Pinmux.Set(channel.Pin, function);
         }
     }
 }

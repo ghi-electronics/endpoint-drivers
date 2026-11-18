@@ -11,6 +11,8 @@
 // applying pinctrl, so SDA (GPIO 2) and SCL (GPIO 3) stay unmapped until
 // Initialize shells out to /usr/sbin/endpoint-pinmux to mux them to ALT0.
 
+using System.Collections.Generic;
+
 namespace GHIElectronics.Endpoint.Drivers.RaspberryPi;
 
 public static partial class Zero2W
@@ -26,27 +28,32 @@ public static partial class Zero2W
         private const string KernelModule = "i2c-bcm2835";
         private const string DevModule = "i2c-dev";
 
+        // Pre-Initialize pinmux state, remembered so UnInitialize can restore it
+        // in the same process. Keyed on BCM GPIO number.
+        private static readonly Dictionary<int, uint> _saved = new();
+
         /// <summary>Load the kernel driver and mux the bus's SDA + SCL pins to I2C.
         /// Idempotent; safe to call again. Pair with <see cref="UnInitialize"/>.</summary>
         public static void Initialize(Bus bus)
         {
-            // Save BEFORE modprobe: the kernel i2c-bcm2835 bind may mux SDA/SCL
-            // on its own (pinctrl-framework auto-default), which would make
-            // "pre-Initialize state" look like 4 instead of 0. Capture the
-            // user's real pre-Init state first so UnInitialize restores to that.
-            Pinmux.Save(bus.SdaPin);
-            Pinmux.Save(bus.SclPin);
+            // Snapshot BEFORE modprobe: the kernel i2c-bcm2835 bind may mux
+            // SDA/SCL on its own (pinctrl-framework auto-default), which would
+            // make "pre-Initialize state" look like ALT0 instead of Input.
+            // Capture the user's real pre-Init state first so UnInitialize
+            // restores to that.
+            _saved[bus.SdaPin] = Pinmux.Get(bus.SdaPin);
+            _saved[bus.SclPin] = Pinmux.Get(bus.SclPin);
             Pinmux.Modprobe(KernelModule);
             Pinmux.Modprobe(DevModule);
-            Pinmux.Set(bus.SdaPin, bus.SdaFunction);
-            Pinmux.Set(bus.SclPin, bus.SclFunction);
+            Pinmux.Set(bus.SdaPin, (uint)bus.SdaFunction);
+            Pinmux.Set(bus.SclPin, (uint)bus.SclFunction);
         }
 
         /// <summary>Restore SDA + SCL to the state they were in before Initialize.</summary>
         public static void UnInitialize(Bus bus)
         {
-            Pinmux.Restore(bus.SdaPin);
-            Pinmux.Restore(bus.SclPin);
+            if (_saved.Remove(bus.SdaPin, out var sda)) Pinmux.Set(bus.SdaPin, sda);
+            if (_saved.Remove(bus.SclPin, out var scl)) Pinmux.Set(bus.SclPin, scl);
         }
     }
 }

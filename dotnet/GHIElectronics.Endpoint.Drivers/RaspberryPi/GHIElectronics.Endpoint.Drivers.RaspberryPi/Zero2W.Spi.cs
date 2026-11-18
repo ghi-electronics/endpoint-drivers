@@ -8,6 +8,8 @@
 //     spi.TransferFullDuplex(tx, rx);
 //     Zero2W.Spi.UnInitialize(Zero2W.Spi.Spi0);
 
+using System.Collections.Generic;
+
 namespace GHIElectronics.Endpoint.Drivers.RaspberryPi;
 
 public static partial class Zero2W
@@ -37,28 +39,30 @@ public static partial class Zero2W
         private const string Controller = "spi-bcm2835";
         private const string CharDev = "spidev";
 
+        private static readonly Dictionary<int, uint> _saved = new();
+
         public static void Initialize(Bus bus)
         {
-            // Save before modprobe so pre-Init state is captured before any
-            // auto-mux the kernel driver might apply. See Zero2W.I2c.Initialize.
-            Pinmux.Save(bus.MosiPin);
-            Pinmux.Save(bus.MisoPin);
-            Pinmux.Save(bus.SclkPin);
-            Pinmux.Save(bus.Ce0Pin);
+            // Snapshot before modprobe so pre-Init state is captured before
+            // any auto-mux the kernel driver might apply. See Zero2W.I2c.Initialize.
+            _saved[bus.MosiPin] = Pinmux.Get(bus.MosiPin);
+            _saved[bus.MisoPin] = Pinmux.Get(bus.MisoPin);
+            _saved[bus.SclkPin] = Pinmux.Get(bus.SclkPin);
+            _saved[bus.Ce0Pin]  = Pinmux.Get(bus.Ce0Pin);
             Pinmux.Modprobe(Controller);
             Pinmux.Modprobe(CharDev);
-            Pinmux.Set(bus.MosiPin, bus.MosiFunction);
-            Pinmux.Set(bus.MisoPin, bus.MisoFunction);
-            Pinmux.Set(bus.SclkPin, bus.SclkFunction);
-            Pinmux.Set(bus.Ce0Pin,  bus.Ce0Function);
+            Pinmux.Set(bus.MosiPin, (uint)bus.MosiFunction);
+            Pinmux.Set(bus.MisoPin, (uint)bus.MisoFunction);
+            Pinmux.Set(bus.SclkPin, (uint)bus.SclkFunction);
+            Pinmux.Set(bus.Ce0Pin,  (uint)bus.Ce0Function);
         }
 
         public static void UnInitialize(Bus bus)
         {
-            Pinmux.Restore(bus.MosiPin);
-            Pinmux.Restore(bus.MisoPin);
-            Pinmux.Restore(bus.SclkPin);
-            Pinmux.Restore(bus.Ce0Pin);
+            if (_saved.Remove(bus.MosiPin, out var mosi)) Pinmux.Set(bus.MosiPin, mosi);
+            if (_saved.Remove(bus.MisoPin, out var miso)) Pinmux.Set(bus.MisoPin, miso);
+            if (_saved.Remove(bus.SclkPin, out var sclk)) Pinmux.Set(bus.SclkPin, sclk);
+            if (_saved.Remove(bus.Ce0Pin,  out var ce0))  Pinmux.Set(bus.Ce0Pin,  ce0);
         }
     }
 }
