@@ -25,6 +25,12 @@ public static partial class Zero2W
 {
     public static class Gpio
     {
+        /// <summary>On-board green ACT LED (BCM GPIO 29, active-low).
+        /// The Endpoint Pi image's /etc/init.d/S29actled releases this pin from the
+        /// kernel LED driver at boot so <see cref="System.Device.Gpio.GpioController"/>
+        /// can claim it like any other pin.</summary>
+        public const int Led = 29;
+
         // BCM GPIO numbers exposed on the 40-pin header. Pin0 and Pin1 are
         // reserved for HAT EEPROM I2C (ID_SDA/ID_SCL) and should normally not
         // be used by user code; they're included for completeness.
