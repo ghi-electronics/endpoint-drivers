@@ -29,9 +29,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- No GHIElectronics.Endpoint.Core dependency: this package is for
-         non-Endpoint boards. Only the Microsoft System.Device.Gpio package
-         (which gives us GpioController + LibGpiodDriver) is needed. -->
+    <!-- GHIElectronics.Endpoint.Core provides IBoardSupport, UnknownBoardSupport,
+         the BoardSupport registry, and the chip-neutral I2cController /
+         SpiController / PwmController / SerialPortController verbs. Pi driver
+         plugs into this one-way; Core has no reverse knowledge of Pi. -->
+    <ProjectReference Include="..\..\..\..\..\Endpoint-Libraries\Dotnet\GHIElectronics.Endpoint.Libraries\GHIElectronics.Endpoint.Core\GHIElectronics.Endpoint.Core.csproj" />
     <PackageReference Include="System.Device.Gpio" Version="4.2.0" />
   </ItemGroup>
 

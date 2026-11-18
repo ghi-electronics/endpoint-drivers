@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "GHIElectronics.Endpoint.Drivers.RaspberryPi"
+version = "0.5.3"
+description = "Raspberry Pi board support for Endpoint. One package covers every Pi model this library knows (Zero 2 W today; more added in later versions). Mirrors the .NET driver API."
+authors = [{ name = "GHI Electronics, LLC", email = "support@ghielectronics.com" }]
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.9"
+# GHIElectronics.Endpoint.Core provides the BoardSupport registry +
+# UnknownBoardSupport base class + chip-neutral I2cController / SpiController /
+# PwmController / SerialPortController. Pi driver inherits UnknownBoardSupport
+# and registers Zero2WBoardSupport at import so Core's verbs dispatch to it.
+dependencies = [
+    "GHIElectronics.Endpoint.Core>=0.5.3,<0.6",
+]
+classifiers = ["Programming Language :: Python :: 3", "Operating System :: POSIX :: Linux"]
+
+[project.urls]
+Homepage = "https://www.ghielectronics.com/"
+Repository = "https://github.com/ghi-electronics/endpoint-drivers"
+Issues = "https://github.com/ghi-electronics/endpoint-drivers/issues"
+
+[tool.setuptools.packages.find]
+include = ["GHIElectronics.Endpoint.Drivers.RaspberryPi", "GHIElectronics.Endpoint.Drivers.RaspberryPi.*"]
+namespaces = true
