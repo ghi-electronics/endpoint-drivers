@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "GHIElectronics.Endpoint.Drivers.FocalTech.FT5xx6"
-version = "0.5.3"
+version = "0.5.4"
 description = "FocalTech FT5xx6 capacitive-touch driver for Endpoint. Mirrors the .NET driver API."
 authors = [{ name = "GHI Electronics, LLC", email = "support@ghielectronics.com" }]
 license = "MIT"
