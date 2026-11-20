@@ -2,6 +2,22 @@
 **/bin/
 **/obj/
 
+# CMake build output (libendpoint-zero2w.so and friends under
+# cpp/.../*/native/build/{linux-arm,linux-arm64}/). Rebuilt from source by
+# cmake --preset endpoint-zero2w-arm[-64] via ci_build.bat step 4; nothing
+# in here is a source artifact.
+**/native/build/
+
+# Per-arch .so files that build_wheels.py copies out of native/build/ into
+# the Python package folder before wheeling. Derived artifacts, not source.
+**/libendpoint-zero2w-*.so
+
+# Python build artifacts
+**/dist/
+**/*.egg-info/
+**/__pycache__/
+**/*.pyc
+
 # NuGet
 *.nupkg
 *.snupkg

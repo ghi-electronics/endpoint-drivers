@@ -1,0 +1,31 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "endpoint-zero2w-arm64",
+            "displayName": "libendpoint-zero2w aarch64 (Pi Zero 2 W 64-bit image)",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/linux-arm64",
+            "toolchainFile": "${sourceDir}/../../../../../../Endpoint-Libraries/native/cmake/endpoint-toolchain.cmake",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "ENDPOINT_ARCH": "aarch64"
+            }
+        },
+        {
+            "name": "endpoint-zero2w-arm",
+            "displayName": "libendpoint-zero2w arm (reserved; Pi image is 64-bit today)",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/linux-arm",
+            "toolchainFile": "${sourceDir}/../../../../../../Endpoint-Libraries/native/cmake/endpoint-toolchain.cmake",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "ENDPOINT_ARCH": "arm"
+            }
+        }
+    ],
+    "buildPresets": [
+        { "name": "endpoint-zero2w-arm64", "configurePreset": "endpoint-zero2w-arm64" },
+        { "name": "endpoint-zero2w-arm",   "configurePreset": "endpoint-zero2w-arm"   }
+    ]
+}

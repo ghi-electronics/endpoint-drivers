@@ -27,3 +27,12 @@ Issues = "https://github.com/ghi-electronics/endpoint-drivers/issues"
 [tool.setuptools.packages.find]
 include = ["GHIElectronics.Endpoint.Drivers.RaspberryPi", "GHIElectronics.Endpoint.Drivers.RaspberryPi.*"]
 namespaces = true
+
+[tool.setuptools.package-data]
+# Native board-support .so files bundled per arch. build_wheels.py drops
+# libendpoint-zero2w-arm[64].so next to __init__.py before packaging; the
+# __init__ picks the matching arch at import time and dlopens it so
+# libendpoint's C++ dispatch sees Pi as the active board (fixes Python GPIO
+# on Pi — the chip-neutral I2C/SPI/PWM/UART path uses the Python-side
+# Zero2WBoardSupport in __init__.py and does not need the .so).
+"GHIElectronics.Endpoint.Drivers.RaspberryPi" = ["libendpoint-zero2w-*.so"]

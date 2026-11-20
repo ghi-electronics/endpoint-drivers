@@ -19,6 +19,44 @@ dist = here / "dist"
 
 shutil.rmtree(dist, ignore_errors=True)
 
+# Pi Zero 2 W native board-support .so: Python GPIO on Pi goes through
+# libendpoint, which needs its C++ BoardSupport::Current() to be set to
+# Zero2WBoardSupport. The .so's constructor does that at ctypes.CDLL time
+# (see endpoint-drivers/cpp/.../RaspberryPi/.../native/libendpoint-zero2w.cpp).
+# Build the .so first with:
+#     cd ../cpp/GHIElectronics.Endpoint.Drivers/RaspberryPi/...RaspberryPi/native
+#     cmake --preset endpoint-zero2w-arm64 && cmake --build --preset endpoint-zero2w-arm64
+#     (same for -arm)
+# then re-run this script. Missing .so is a warning, not an error: a dev who
+# only touched Python can still build + test the Python wheel; Pi GPIO just
+# will not work until the .so is present.
+pi_cpp_build = (here.parent / "cpp" / "GHIElectronics.Endpoint.Drivers" / "RaspberryPi"
+                / "GHIElectronics.Endpoint.Drivers.RaspberryPi" / "native" / "build")
+pi_py_dir = (here / "GHIElectronics.Endpoint.Drivers" / "RaspberryPi"
+             / "GHIElectronics.Endpoint.Drivers.RaspberryPi"
+             / "GHIElectronics" / "Endpoint" / "Drivers" / "RaspberryPi")
+pi_arch_sources = {
+    "arm":   pi_cpp_build / "linux-arm"   / "libendpoint-zero2w-arm.so",
+    "arm64": pi_cpp_build / "linux-arm64" / "libendpoint-zero2w-arm64.so",
+}
+# Scrub any stale copies so a one-arch rebuild never ships both a fresh
+# arm64 and a day-old arm.
+for stale in pi_py_dir.glob("libendpoint-zero2w-*.so"):
+    stale.unlink()
+pi_copied = []
+for arch, source in pi_arch_sources.items():
+    if source.exists():
+        shutil.copy2(source, pi_py_dir / source.name)
+        pi_copied.append(arch)
+    else:
+        print(f"note: skipping Pi {arch} native .so (no {source})")
+if pi_copied:
+    print(f"Bundled libendpoint-zero2w for: {', '.join(pi_copied)}")
+else:
+    print("warning: no Pi native .so bundled. Python GPIO on Pi will throw "
+          "'GPIO is not supported' until you build "
+          "../cpp/.../RaspberryPi/.../native via its cmake presets and re-run.")
+
 # A driver = a directory GHIElectronics.Endpoint.Drivers.<Vendor>.<Chip> with
 # a pyproject.toml. Globbed recursively because the vendor subfolder adds a
 # middle layer the libraries tree does not have.

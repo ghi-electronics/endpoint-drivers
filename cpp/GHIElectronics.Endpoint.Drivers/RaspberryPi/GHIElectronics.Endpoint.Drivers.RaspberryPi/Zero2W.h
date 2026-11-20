@@ -299,6 +299,21 @@ private:
 // doesn't already identify an Endpoint chip. On an Endpoint board,
 // libendpoint's BoardSupportInit.cpp registered the right board earlier;
 // Zero2WBoardSupport should not fight that.
+//
+// ENDPOINT_ZERO2W_NO_AUTO_REGISTER: if defined before including this header,
+// the inline self-register below is suppressed. The .so build
+// (endpoint-drivers/cpp/.../RaspberryPi/.../native/libendpoint-zero2w.cpp)
+// defines it so the shared-library's __attribute__((constructor)) is the
+// only thing that registers the board. Needed because the inline path
+// calls libendpoint's C++ BoardSupport::Register (which is header-only
+// inline, so each .so gets its OWN copy of the registry slot); across .so
+// boundaries that would write into the driver's private slot instead of
+// libendpoint's real one. The .cpp uses extern "C"
+// endpoint_register_board_support instead, which is the ONE function
+// libendpoint.so exports, always touching the ONE real slot inside it.
+// Single-file C/C++ users link libendpoint statically into their binary
+// so the inline path still wins there with no duplication.
+#ifndef ENDPOINT_ZERO2W_NO_AUTO_REGISTER
 namespace detail {
     inline int RegisterIfPi() {
         if (GHIElectronics::Endpoint::Core::ChipDetect::Current() == GHIElectronics::Endpoint::Core::Chip::Unknown) {
@@ -308,5 +323,6 @@ namespace detail {
     }
     inline const int _pi_registered = RegisterIfPi();
 }
+#endif
 
 }  // namespace GHIElectronics::Endpoint::Drivers::RaspberryPi

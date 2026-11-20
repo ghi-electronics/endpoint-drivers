@@ -26,6 +26,28 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+
+    <!-- Native libendpoint-zero2w per RID. Shipped in the standard NuGet
+         runtimes/<rid>/native/ layout so .NET's RID-based asset resolution
+         picks the matching .so at publish / F5 time. The file is RENAMED to
+         libendpoint-zero2w.so (drop the -arm / -arm64 suffix) because
+         DllImport("endpoint-zero2w") in Zero2WNativeLoader.cs looks for an
+         unsuffixed name; RID folders already disambiguate the arch.
+         Source: ../../../../cpp/.../RaspberryPi/.../native/build/linux-<arch>/
+         built via cmake preset endpoint-zero2w-<arch>. ci_build.bat
+         step 4 runs those cmake builds before the dotnet pack so the files
+         exist. Condition=Exists keeps dev builds (without the .so built
+         yet) from erroring. -->
+    <None Include="..\..\..\..\cpp\GHIElectronics.Endpoint.Drivers\RaspberryPi\GHIElectronics.Endpoint.Drivers.RaspberryPi\native\build\linux-arm\libendpoint-zero2w-arm.so"
+          Condition="Exists('..\..\..\..\cpp\GHIElectronics.Endpoint.Drivers\RaspberryPi\GHIElectronics.Endpoint.Drivers.RaspberryPi\native\build\linux-arm\libendpoint-zero2w-arm.so')"
+          Pack="true"
+          PackagePath="runtimes/linux-arm/native/libendpoint-zero2w.so"
+          Visible="false" />
+    <None Include="..\..\..\..\cpp\GHIElectronics.Endpoint.Drivers\RaspberryPi\GHIElectronics.Endpoint.Drivers.RaspberryPi\native\build\linux-arm64\libendpoint-zero2w-arm64.so"
+          Condition="Exists('..\..\..\..\cpp\GHIElectronics.Endpoint.Drivers\RaspberryPi\GHIElectronics.Endpoint.Drivers.RaspberryPi\native\build\linux-arm64\libendpoint-zero2w-arm64.so')"
+          Pack="true"
+          PackagePath="runtimes/linux-arm64/native/libendpoint-zero2w.so"
+          Visible="false" />
   </ItemGroup>
 
   <ItemGroup>

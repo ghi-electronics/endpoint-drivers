@@ -18,6 +18,16 @@ STM32 pin primitives) inherits UnknownBoardSupport's "not supported on
 this board" throw from Core.
 """
 
+# Import Core FIRST: this loads libendpoint-<arch>.so (with RTLD_GLOBAL, see
+# Core/_native.py). Required BEFORE we dlopen libendpoint-zero2w-<arch>.so
+# below, because that .so's __attribute__((constructor)) looks up
+# endpoint_register_board_support via dlsym(RTLD_DEFAULT) and will find
+# nothing if libendpoint has not been loaded globally first. On an Endpoint
+# chip (EPM815/EPN256/EPN128) the libendpoint load also auto-registers that
+# chip's BoardSupport, and the zero2w constructor then no-ops on the
+# ChipDetect check so the Endpoint board stays active.
+from GHIElectronics.Endpoint.Core import _native as _unused_core_native  # noqa: F401
+
 from GHIElectronics.Endpoint.Core._board_support import (
     BoardSupport as _BoardSupport,
     UnknownBoardSupport as _UnknownBoardSupport,
@@ -25,6 +35,38 @@ from GHIElectronics.Endpoint.Core._board_support import (
 from GHIElectronics.Endpoint.Core._chip_detect import Chip as _Chip, Current as _ChipCurrent
 
 from ._pinmux import Pinmux as _Pinmux
+
+# Load the native board-support .so so libendpoint's C++ dispatch sees the
+# Pi. Python GPIO goes through libendpoint directly (unlike I2C/SPI/PWM/UART
+# which still use the Python-side Zero2WBoardSupport below), so without this
+# load every gpio.OpenPin would throw "GPIO is not supported on this board
+# ('Unknown')".
+def _load_native_board_driver():
+    import ctypes, os, platform
+    machine = platform.machine().lower()
+    if machine in ("aarch64", "arm64"):
+        name = "libendpoint-zero2w-arm64.so"
+    elif machine.startswith("armv") or machine == "arm":
+        name = "libendpoint-zero2w-arm.so"
+    else:
+        # Dev PC (Linux x86_64, Windows, Mac); no board native lib to load.
+        # Python-side Zero2WBoardSupport below still registers for the
+        # Python-dispatched peripherals; GPIO on dev has no meaning anyway.
+        return
+    here = os.path.dirname(os.path.abspath(__file__))
+    path = os.path.join(here, name)
+    if not os.path.exists(path):
+        # Driver wheel was built without the per-arch .so (dev install from
+        # source skipped the C++ build step). Python peripherals still work;
+        # Python GPIO on a Pi will fall through to libendpoint's "Unknown
+        # board" throw.
+        return
+    # RTLD_GLOBAL is overkill here (the .so has no symbols other callers need
+    # to see), but matches Core's load mode so the dynamic linker behavior is
+    # uniform. Harmless either way.
+    ctypes.CDLL(path, mode=ctypes.RTLD_GLOBAL)
+
+_load_native_board_driver()
 
 
 class Zero2W:

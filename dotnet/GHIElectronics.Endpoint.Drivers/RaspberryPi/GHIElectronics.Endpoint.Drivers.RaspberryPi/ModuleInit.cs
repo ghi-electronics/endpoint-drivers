@@ -18,6 +18,14 @@ internal static class ModuleInit
         // already registered its BoardSupport earlier in the same process;
         // Zero2WBoardSupport should not fight that.
         if (ChipDetect.Current == Chip.Unknown)
+        {
+            // Fire the native .so load first. libendpoint's C++
+            // BoardSupport::Current() needs Zero2W too for any peripheral
+            // dispatch that goes through libendpoint (GPIO today in the
+            // Python path; .NET controllers are future-proofed). Safe no-op
+            // if the .so is missing (dev PC, non-Pi RID).
+            Zero2WNativeLoader.ForceLoad();
             BoardSupport.Register(new Zero2WBoardSupport());
+        }
     }
 }
