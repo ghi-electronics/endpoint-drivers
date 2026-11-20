@@ -211,6 +211,14 @@ struct Zero2WBoardSupport : GHIElectronics::Endpoint::Core::UnknownBoardSupport 
         return n;
     }
 
+    // ---------- GPIO ----------
+    // Pi exposes every BCM GPIO on a single /dev/gpiochip0 (labelled
+    // pinctrl-bcm2835) with the BCM pin number matching the line number.
+    // Overriding these bypasses the Endpoint-boards' gpio<letter> label
+    // lookup, which would fail on the Pi's kernel.
+    int GpioChipId(int /*pin*/) override { return 0; }
+    int GpioLineId(int pin) override     { return pin; }
+
     // ---------- I2C ----------
     void I2cInitialize(int bus, int /*frequency*/) override {
         if (bus != Zero2W::I2c::I2c1)
