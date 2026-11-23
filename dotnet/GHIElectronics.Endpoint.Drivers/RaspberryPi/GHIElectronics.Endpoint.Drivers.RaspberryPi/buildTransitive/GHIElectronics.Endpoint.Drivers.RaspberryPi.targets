@@ -1,0 +1,20 @@
+<Project>
+  <!-- Imported automatically into any project with a PackageReference to
+       GHIElectronics.Endpoint.Drivers.RaspberryPi.
+
+       Pin constants are `const`, so the C# compiler inlines their values and
+       the consumer's IL never names this assembly. Reachability analysis then
+       sees an unused package: a trimmed or Native AOT publish (Ctrl+F5) drops
+       the .dll outright, its [ModuleInitializer] never runs, no board
+       registers, and every peripheral call throws "not supported on this
+       board". Rooting the assembly keeps it in the output so the initializer
+       runs.
+
+       The JIT path (F5, endpoint-cli deploy) does not trim, and is handled in
+       GHIElectronics.Endpoint.Core by BoardSupport loading this assembly by
+       name. The two cover each other; neither covers both on its own. -->
+
+  <ItemGroup>
+    <TrimmerRootAssembly Include="GHIElectronics.Endpoint.Drivers.RaspberryPi" />
+  </ItemGroup>
+</Project>
