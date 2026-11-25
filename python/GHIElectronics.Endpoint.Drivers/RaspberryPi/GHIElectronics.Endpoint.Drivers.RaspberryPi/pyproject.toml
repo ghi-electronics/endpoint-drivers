@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "GHIElectronics.Endpoint.Drivers.RaspberryPi"
-version = "0.5.4"
+version = "0.5.5"
 description = "Raspberry Pi board support for Endpoint. One package covers every Pi model this library knows (Zero 2 W today; more added in later versions). Mirrors the .NET driver API."
 authors = [{ name = "GHI Electronics, LLC", email = "support@ghielectronics.com" }]
 license = "MIT"
@@ -15,7 +15,7 @@ requires-python = ">=3.9"
 # PwmController / SerialPortController. Pi driver inherits UnknownBoardSupport
 # and registers Zero2WBoardSupport at import so Core's verbs dispatch to it.
 dependencies = [
-    "GHIElectronics.Endpoint.Core>=0.5.4,<0.6",
+    "GHIElectronics.Endpoint.Core>=0.5.5,<0.6",
 ]
 classifiers = ["Programming Language :: Python :: 3", "Operating System :: POSIX :: Linux"]
 
